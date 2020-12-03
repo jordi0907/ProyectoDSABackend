@@ -1,3 +1,102 @@
-<h1>Hello</h1>
-<p>World</p>
-<img src="espinete.jpg">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Kill the Ratpenat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="virusCoronaLogo.jpg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <script>
+            $(document).ready(function(){
+                $("#frmRegister").hide();
+                $("#frmTable").hide();
+                $("#btnLogin").click(function(){
+                  var userName = $('#username').val();
+                  var password = $('#password').val();
+                  alert("username: " +  userName + "password: " + password);
+                  var success = "false";
+			      $.getJSON("http://localhost:8080/dsaApp/tracks/prueba", function(json){
+			        $("#userId").html(json.id);
+			        $("#userTitle").html(json.title);
+					$("#frmLogin").hide();
+					$("#frmTable").show();
+			      });
+                $("#btnRegisterNow").click(function(){
+                    $("#frmLogin").hide();
+			        $("#frmRegister").show();
+                });
+                $("#btnBack").click(function(){
+			    $("#frmTable").hide();
+			    $("#frmLogin").show();
+			    });
+			});
+            });
+        </script>
+    <style>
+
+    </style>
+</head>
+<body style="background-color:rgb(252, 207, 206);">
+<div class="jumbotron" style="background-color:rgb(230, 107, 106); font-family:Creepster;">
+    <h1 class="text-center" style=" font-size:100px">Kill the Ratpenat</h1>
+</div>
+<form id="frmLogin" style="color:black; text-align:center;">
+    <div class="modal-body row">
+        <div class="col-md-6 text-center" style = font-family:Arial>
+            <label style=" font-size:20px" for="username">Username:</label>
+            <input type="text" id="username" name="username"><br>
+            <br>
+            <label style=" font-size:20px" for="password">Password:</label>
+            <input type="password" id="password" name="password"><br>
+            <br>
+            <button type="button" class="btn btn-primary" style=" font-size:20px" align = "center" id="btnLogin">Login</button><br>
+        </div>
+        <div class="col-md-6 text-center" style = font-family:Arial;>
+            <label style=" font-size:20px">Do you not have an account yet?</label><br>
+            <br>
+            <button type="button" class="btn btn-primary" style=" font-size:20px" id="btnRegisterNow">REGISTER NOW</button>
+        </div>
+    </div>
+    <img src="virusCorona.png" class="img-rounded">
+</form>
+
+<form id="frmRegister" style="color:black; text-align:center;">
+    <label for="NewUserName">Username:</label>
+    <input type="text" id="NewUserName" name="NewUserName"><br>
+    <label for="NewSurName">Surname:</label>
+    <input type="text" id="NewSurName" name="NewSurName"><br>
+    <label for="NewPassword">Password:</label>
+    <input type="password" id="NewPassword" name="NewPassword"><br>
+    <button type="button" class="btn btn-primary" id="btnRegister">Register</button>
+</form>
+
+<form id="frmTable">
+    <div class="container">
+        <h2 style="color:black; text-align:center;"><strong>USER INFORMATION</strong></h2>
+        <table class="table table-bordered" id="tablauser">
+            <tr>
+                <th>Name</th>
+                <td id="userId">id</td>
+            </tr>
+            <tr>
+                <th>Surname</th>
+                <td id="userTitle">title</td>
+            </tr>
+            <tr>
+                <th>ID</th>
+            </tr>
+            <tr>
+                <th>Vida</th>
+            </tr>
+            <tr>
+                <th>Dinero</th>
+            </tr>
+        </table>
+        <button type="button" class="btn btn-primary" id="btnBack">Change user</button>
+    </div>
+</form>
+</body>
+</html>
