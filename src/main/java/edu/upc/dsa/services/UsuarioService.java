@@ -32,7 +32,8 @@ public class UsuarioService {
     @ApiOperation(value = "create a new Usuario", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response=Usuario.class),
-            @ApiResponse(code = 500, message = "Validation Error")
+            @ApiResponse(code = 500, message = "Validation Error"),
+            @ApiResponse(code = 409, message = "User not found Or duplicated")
 
     })
 
@@ -41,8 +42,8 @@ public class UsuarioService {
     public Response addUsuario(Usuario u) {
         try {
             if (u.getUsername() == null || u.getPassword() == null) return Response.status(500).entity(u).build();
-            this.tm.addUser(u);
-            return Response.status(201).entity(u).build();
+            if(this.tm.addUser(u) == null) return Response.status(409).build();
+            else return Response.status(201).entity(u).build();
         }
         catch(Exception e) {
             return Response.status(500).build();
