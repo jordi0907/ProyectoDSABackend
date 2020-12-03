@@ -47,9 +47,34 @@ public class UsuarioService {
         catch(Exception e) {
             return Response.status(500).build();
         }
-
     }
 
+    @POST
+    @ApiOperation(value = "loggin", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response=Usuario.class),
+            @ApiResponse(code = 500, message = "Validation Error")
+
+    })
+    // si el loggin es correcto se devuelve 201 y usuario,
+    // si el usuario o password es incorrecto se devuelve un 404 not found
+    // si hay un fallo de conexion o los datos introducidos estan en blanco se devuelve un 500.
+
+    @Path("/logginuser/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response loggin(Usuario u) {
+        try {
+            if (u.getUsername() == null || u.getPassword() == null) return Response.status(500).entity(u).build();
+            this.tm.loggin(u);
+            if( this.tm.loggin(u) == null) return Response.status(404).build();
+            else return Response.status(201).entity(u).build();
+
+
+        }
+        catch(Exception e) {
+            return Response.status(500).build();
+        }
+    }
 
 
 }

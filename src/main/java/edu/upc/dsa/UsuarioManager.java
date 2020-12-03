@@ -13,6 +13,7 @@ public interface UsuarioManager {
     public void sellObjeto(Objetos Objeto);
     public int sizeUser();
     public Usuario addUser(Usuario u);
+    public Usuario loggin(Usuario u);
 
 
    /* public Track addTrack(String title, String singer);
