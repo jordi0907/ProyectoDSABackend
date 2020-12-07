@@ -85,7 +85,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
                 return i;
             }
         }
-        
+
         return null;
     }
 
