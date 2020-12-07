@@ -77,16 +77,15 @@ public class UsuarioManagerImpl implements UsuarioManager{
 
     @Override
     public Usuario loggin(Usuario u) {
-        for (String i : usuarioContendor.keySet()) {
-            String nombre = usuarioContendor.get(i).getUsername();
-            String password = usuarioContendor.get(i).getPassword();
+        for (Usuario i : this.usuarioList) {
+            String nombre = i.getUsername();
+            String password = i.getPassword();
             if (nombre.equals(u.getUsername()) && password.equals(u.getPassword())) {
                 logger.info("el usuario coincide");
-                return usuarioContendor.get(i);
-            } else
-                logger.info("el usuario no coincide");
-                return null;
+                return i;
+            }
         }
+        
         return null;
     }
 
