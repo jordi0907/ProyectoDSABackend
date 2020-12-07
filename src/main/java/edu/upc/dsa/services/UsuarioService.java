@@ -54,7 +54,8 @@ public class UsuarioService {
     @ApiOperation(value = "loggin", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response=Usuario.class),
-            @ApiResponse(code = 500, message = "Validation Error")
+            @ApiResponse(code = 500, message = "Validation Error"),
+            @ApiResponse(code = 404, message = "User Not found"),
 
     })
     // si el loggin es correcto se devuelve 201 y usuario,
@@ -65,10 +66,11 @@ public class UsuarioService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response loggin(Usuario u) {
         try {
+            Usuario usuario = this.tm.loggin(u);
             if (u.getUsername() == null || u.getPassword() == null) return Response.status(500).entity(u).build();
-            this.tm.loggin(u);
-            if( this.tm.loggin(u) == null) return Response.status(404).build();
-            else return Response.status(201).entity(u).build();
+
+            if( usuario == null) return Response.status(404).build();
+            else return Response.status(201).entity(usuario).build();
 
 
         }

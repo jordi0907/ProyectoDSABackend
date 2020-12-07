@@ -68,10 +68,10 @@ public class UsuarioManagerImpl implements UsuarioManager{
             }
         }
         u.getObjetosList().add(bolsabasura);
-        this.usuarioContendor.put(u.getIdUser() ,new Usuario(u.getUsername(), u.getPassword()));
+        this.usuarioContendor.put(u.getIdUser() ,u);
         usuarioList.add(u);
-        logger.info("Se añade porque no esta en la lista" + u);
-        return u;
+        logger.info("Se añade porque no esta en la lista" + this.usuarioContendor.get(u.getIdUser()));
+        return this.usuarioContendor.get(u.getIdUser());
     }
 
     @Override
@@ -80,7 +80,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
             String nombre = usuarioContendor.get(i).getUsername();
             String password = usuarioContendor.get(i).getPassword();
             if (nombre.equals(u.getUsername()) && password.equals(u.getPassword())) {
-                logger.info("el usuario coincide");
+                logger.info("el usuario coincide" + usuarioContendor.get(i) );
                 return usuarioContendor.get(i);
             } else
                 logger.info("el usuario no coincide");
