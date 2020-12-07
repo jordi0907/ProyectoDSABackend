@@ -6,7 +6,7 @@ import edu.upc.dsa.models.Usuario;
 public interface UsuarioManager {
 
     public Usuario getUser(String username);
-   /* public Usuario addUser(String nombre, String password);*/
+    //public Usuario addUser(String nombre, String password);
     public void updateUser(UsuarioManager user); // Vida, posicion, defensa, comprar objetos, Perder Vida...
     public void deleteUser(String idUser);
     public Object getObjeto(Objetos Objeto, String idUser);

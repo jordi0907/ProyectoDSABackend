@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -22,10 +23,20 @@ import java.util.Arrays;
 public class UsuarioService {
 
     private UsuarioManager tm;
+    final static Logger logger = Logger.getLogger(UsuarioManagerImpl.class);
 
     public UsuarioService() {
         this.tm = UsuarioManagerImpl.getInstance();
+
+        //testRun();
     }
+
+    /*private void testRun() {
+        if (tm.sizeUser()==0) {
+            Usuario jessi = new Usuario("jessi", "hola");
+            this.tm.addUser(jessi);
+        }
+    }*/
 
 
     @POST
@@ -54,6 +65,7 @@ public class UsuarioService {
     @ApiOperation(value = "loggin", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response=Usuario.class),
+            @ApiResponse(code = 404, message = "User or password is wrong"),
             @ApiResponse(code = 500, message = "Validation Error")
 
     })
@@ -66,13 +78,12 @@ public class UsuarioService {
     public Response loggin(Usuario u) {
         try {
             if (u.getUsername() == null || u.getPassword() == null) return Response.status(500).entity(u).build();
-            this.tm.loggin(u);
-            if( this.tm.loggin(u) == null) return Response.status(404).build();
-            else return Response.status(201).entity(u).build();
-
-
+            Usuario user = this.tm.loggin(u);
+            if( user == null) return Response.status(404).build();
+            else return Response.status(201).entity(user).build();
         }
         catch(Exception e) {
+            logger.info("In Exception");
             return Response.status(500).build();
         }
     }

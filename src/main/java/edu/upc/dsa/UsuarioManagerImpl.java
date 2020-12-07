@@ -67,11 +67,11 @@ public class UsuarioManagerImpl implements UsuarioManager{
                 return null;
             }
         }
-        u.getObjetosList().add(bolsabasura);
+        /*u.getObjetosList().add(bolsabasura);
         this.usuarioContendor.put(u.getUsername() ,new Usuario(u.getUsername(), u.getPassword()));
         usuarioList.add(u);
         logger.info("Se añade porque no esta en la lista" + u);
-        logger.info("Objetos del usuario " + u.getUsername()+" son "+u.getObjetosList());
+        logger.info("Objetos del usuario " + u.getUsername()+" son "+u.getObjetosList());*/
         return u;
     }
 
