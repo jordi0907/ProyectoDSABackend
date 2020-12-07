@@ -14,27 +14,19 @@ public class UsuarioManagerImpl implements UsuarioManager{
 
     private static UsuarioManager instance;
     final static Logger logger = Logger.getLogger(UsuarioManagerImpl.class);
-    protected HashMap<String, Usuario> usuarioContendor; // valor = Usuario / Key = idusuario
+    protected HashMap<String, Usuario> usuarioContendor; // Key = username , valor = Usuario
     protected List<Usuario> usuarioList;
-    protected List<Objetos> objetosList;
-    Objetos mascarilla;
-    Objetos pocion;
-    Objetos regeneron;
-    Objetos pcr;
     Objetos bolsabasura;
+    //protected List<Objetos> objetosList;
+   // Objetos bolsabasura;
 
 
 
     public UsuarioManagerImpl() {
         this.usuarioList = new ArrayList<>();
         this.usuarioContendor = new HashMap<String, Usuario>();
-        this.objetosList = new LinkedList<>();
-        mascarilla = new Objetos ("mascarilla", 50, 0,20);
-        pocion = new Objetos("pocion",50, 70, 0);
-        regeneron = new Objetos ("regeneron", 100,100,50);
-        pcr = new Objetos("pcr", 0,0,0);
-        bolsabasura = new Objetos("bolsabasura", 0,0,1);
-
+        this.bolsabasura= new Objetos("bolsabasura",0,0,1);
+       // this.objetosList = new LinkedList<>();
     }
 
 
@@ -45,7 +37,15 @@ public class UsuarioManagerImpl implements UsuarioManager{
 
 
     @Override
-    public UsuarioManager getUser(String idUser) {
+    public Usuario getUser(String username) {
+        for (Usuario i: this.usuarioList){
+            String nombre = i.getUsername();
+            if (nombre.equals(username)) {
+                logger.info("Usuario"+ username+"encontrado");
+                return i;
+            }
+        }
+        logger.info("Usuario"+ username+" no existe");
         return null;
     }
 
@@ -68,9 +68,10 @@ public class UsuarioManagerImpl implements UsuarioManager{
             }
         }
         u.getObjetosList().add(bolsabasura);
-        this.usuarioContendor.put(u.getIdUser() ,new Usuario(u.getUsername(), u.getPassword()));
+        this.usuarioContendor.put(u.getUsername() ,new Usuario(u.getUsername(), u.getPassword()));
         usuarioList.add(u);
         logger.info("Se añade porque no esta en la lista" + u);
+        logger.info("Objetos del usuario " + u.getUsername()+" son "+u.getObjetosList());
         return u;
     }
 
@@ -96,7 +97,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
     }
 
     @Override
-    public void deleteUser(UsuarioManager idUser) {
+    public void deleteUser(String idUser) {
 
     }
 
