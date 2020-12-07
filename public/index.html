@@ -16,14 +16,29 @@
                 $("#btnLogin").click(function(){
                   var userName = $('#username').val();
                   var password = $('#password').val();
-                  alert("username: " +  userName + "password: " + password);
-                  var success = "false";
-			      $.getJSON("http://localhost:8080/dsaApp/tracks/prueba", function(json){
-			        $("#userId").html(json.id);
-			        $("#userTitle").html(json.title);
-					$("#frmLogin").hide();
-					$("#frmTable").show();
-			      });
+                  $.ajax({
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        url: "http://localhost:8080/dsaApp/usuario/logginuser",
+                        type: "POST",
+                        data: JSON.stringify({"username": userName, "password": password}),
+                        dataType:'json',
+                        success: function (response) {
+                        	$("#userId").html(response.idUser);
+                            $("#userNameColumn").html(response.username);
+                            $("#userVida").html(response.vida+" %");
+                            $("#userDefensa").html(response.defensa);
+                            $("#userDinero").html(response.dinero+" €");
+                            $("#userTiempo").html(response.tiempo);
+                            $("#frmLogin").hide();
+					        $("#frmTable").show();
+                        },
+                        error: function(error){
+                            alert("Wrong username or password.", error);
+                        }
+                  });
                 $("#btnRegisterNow").click(function(){
                     $("#frmLogin").hide();
 			        $("#frmRegister").show();
@@ -36,31 +51,30 @@
             });
         </script>
     <style>
-
     </style>
 </head>
 <body style="background-color:rgb(252, 207, 206);">
-<div class="jumbotron" style="background-color:rgb(230, 107, 106); font-family:Creepster;">
-    <h1 class="text-center" style=" font-size:100px">Kill the Ratpenat</h1>
+<div class="jumbotron" style="padding-top:30px; padding-bottom:30px; background-color:rgb(230, 107, 106); font-family:Creepster;">
+    <h1 class="text-center" style="font-size:100px;margin:0px;">Kill the Ratpenat</h1>
 </div>
 <form id="frmLogin" style="color:black; text-align:center;">
-    <div class="modal-body row">
-        <div class="col-md-6 text-center" style = font-family:Arial>
-            <label style=" font-size:20px" for="username">Username:</label>
-            <input type="text" id="username" name="username"><br>
+    <div class="modal-body row" >
+        <div class="col-md-6 text-center" style = "font-family:Arial;padding-left:70px">
+            <label style=" font-size:17px" for="username">Username:</label>
+            <input type="text" id="username" name="username">
             <br>
-            <label style=" font-size:20px" for="password">Password:</label>
-            <input type="password" id="password" name="password"><br>
+            <label style="font-size:17px; margin-top:10px" for="password">Password:</label>
+            <input type="password" id="password" name="password">
             <br>
-            <button type="button" class="btn btn-primary" style=" font-size:20px" align = "center" id="btnLogin">Login</button><br>
+            <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" align = "center" id="btnLogin">Login</button>
+            <br>
+            <label style=" font-size:15px; margin-top:30px ">Do you not have an account yet?</label><br>
+            <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:15px; margin-top:10px" id="btnRegisterNow">REGISTER NOW</button>
         </div>
-        <div class="col-md-6 text-center" style = font-family:Arial;>
-            <label style=" font-size:20px">Do you not have an account yet?</label><br>
-            <br>
-            <button type="button" class="btn btn-primary" style=" font-size:20px" id="btnRegisterNow">REGISTER NOW</button>
+        <div class="col-md-6 text-center">
+            <img src="virusCorona.png" class="img-rounded" style="margin-right:150px">
         </div>
     </div>
-    <img src="virusCorona.png" class="img-rounded">
 </form>
 
 <form id="frmRegister" style="color:black; text-align:center;">
@@ -74,29 +88,34 @@
 </form>
 
 <form id="frmTable">
-    <div class="container">
-        <h2 style="color:black; text-align:center;"><strong>USER INFORMATION</strong></h2>
-        <table class="table table-bordered" id="tablauser">
+        <h2 style="color:black; text-align:center; font-size:20px;padding-bottom:25px;"><strong>USER INFORMATION</strong></h2>
+        <table class="table table-bordered" id="tablauser" style=" max-width:50%; margin:0 auto;">
             <tr>
-                <th>Name</th>
-                <td id="userId">id</td>
+                <th style="border: 1px solid black; width:170px;">Username</th>
+                <td style="border: 1px solid black;" id="userNameColumn">id</td>
             </tr>
             <tr>
-                <th>Surname</th>
-                <td id="userTitle">title</td>
+                <th style="border: 1px solid black;">ID</th>
+                <td style="border: 1px solid black;" id="userId">title</td>
             </tr>
             <tr>
-                <th>ID</th>
+                <th style="border: 1px solid black;">Vida</th>
+                <td style="border: 1px solid black;" id="userVida">title</td>
             </tr>
             <tr>
-                <th>Vida</th>
+                <th style="border: 1px solid black;">Defensa</th>
+                <td style="border: 1px solid black;" id="userDefensa">title</td>
             </tr>
             <tr>
-                <th>Dinero</th>
+                <th style="border: 1px solid black;">Dinero</th>
+                <td style="border: 1px solid black;" id="userDinero">title</td>
+            </tr>
+            <tr>
+                <th style="border: 1px solid black;">Tiempo</th>
+                <td style="border: 1px solid black;" id="userTiempo">title</td>
             </tr>
         </table>
-        <button type="button" class="btn btn-primary" id="btnBack">Change user</button>
-    </div>
+        <button type="button" class="btn" id="btnBack" style="margin-left:25%;margin-top:25px;background-color:rgb(200,80,80);">Change user</button>
 </form>
 </body>
 </html>
