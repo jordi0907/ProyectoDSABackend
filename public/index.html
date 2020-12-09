@@ -37,19 +37,47 @@
                         },
                         error: function(error){
                             alert("Wrong username or password.", error);
-                        }
+                        },
                   });
+                });
                 $("#btnRegisterNow").click(function(){
                     $("#frmLogin").hide();
 			        $("#frmRegister").show();
-                });
+			    });
+			    $("#btnRegister").click(function(){
+                    var NewUserName = $('#NewUserName').val();
+                    var Newpassword = $('#NewPassword').val();
+                    var RepeatNewpassword = $('#RepeatNewPassword').val();
+                    if(Newpassword == RepeatNewpassword){
+                        $.ajax({
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                url: "http://localhost:8080/dsaApp/usuario/adduser",
+                                type: "POST",
+                                data: JSON.stringify({"username": NewUserName, "password": Newpassword}),
+                                dataType:'json',
+                                success: function (response) {
+                                    alert("user " + NewUserName + " has been created",response);
+                                    $("#frmRegister").hide();
+                                    $("#frmLogin").show();
+                                },
+                                error: function(error){
+                                    alert("Wrong username or password.", error);
+                                },
+                        });
+                    }
+                    else{
+                        alert("password mismatch");
+                    }
+			    });
                 $("#btnBack").click(function(){
 			    $("#frmTable").hide();
 			    $("#frmLogin").show();
 			    });
-			});
             });
-        </script>
+    </script>
     <style>
     </style>
 </head>
@@ -66,7 +94,7 @@
             <label style="font-size:17px; margin-top:10px" for="password">Password:</label>
             <input type="password" id="password" name="password">
             <br>
-            <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" align = "center" id="btnLogin">Login</button>
+            <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnLogin">Login</button>
             <br>
             <label style=" font-size:15px; margin-top:30px ">Do you not have an account yet?</label><br>
             <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:15px; margin-top:10px" id="btnRegisterNow">REGISTER NOW</button>
@@ -78,13 +106,13 @@
 </form>
 
 <form id="frmRegister" style="color:black; text-align:center;">
-    <label for="NewUserName">Username:</label>
-    <input type="text" id="NewUserName" name="NewUserName"><br>
-    <label for="NewSurName">Surname:</label>
-    <input type="text" id="NewSurName" name="NewSurName"><br>
-    <label for="NewPassword">Password:</label>
-    <input type="password" id="NewPassword" name="NewPassword"><br>
-    <button type="button" class="btn btn-primary" id="btnRegister">Register</button>
+    <label style=" font-size:17px; width:150px;" for="NewUserName">Username:</label>
+    <input style=" font-size:17px" type="text" id="NewUserName" name="NewUserName"><br>
+    <label style=" font-size:17px; margin-top:10px; width:150px;" for="NewPassword">Password:</label>
+    <input style=" font-size:17px; margin-top:10px" type="password" id="NewPassword" name="NewPassword"><br>
+    <label style=" font-size:17px; margin-top:10px; width:150px;" for="RepeatNewPassword">Repeat Password:</label>
+    <input style=" font-size:17px; margin-top:10px" type="password" id="RepeatNewPassword" name="RepeatNewPassword"><br>
+    <button style=" font-size:17px; margin-top:20px; background-color:rgb(200,80,80);" type="button" class="btn" id="btnRegister">Register</button>
 </form>
 
 <form id="frmTable">
