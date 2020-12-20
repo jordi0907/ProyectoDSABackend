@@ -148,7 +148,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
         Session session = null;
         Usuario usuario = null;
         List<Objetos> objetosList=new LinkedList<>();
-        logger.info("El id es " + id);
+        logger.info("El id es: " + id);
 
         String query = "SELECT * FROM Usuario where id = ?";
         String query2 = "SELECT objetoId FROM usuarioobjetos WHERE usuarioId = ?";
