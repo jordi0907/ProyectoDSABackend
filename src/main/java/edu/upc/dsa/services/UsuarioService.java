@@ -87,4 +87,26 @@ public class UsuarioService {
     }
 
 
+    @GET
+    @ApiOperation(value = "get Usuario Actualizado ", notes = "asdasd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Usuario.class),
+            @ApiResponse(code = 404, message = "Track not found")
+    })
+    @Path("/gettuser/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsuarioActualizado(@PathParam("id") String id) {
+
+        Usuario u = this.tm.getUsuarioActualizado(id);
+
+        if (u == null) return Response.status(404).build();
+        else  return Response.status(201).entity(u).build();
+    }
+
+
+
+
+
+
+
 }

@@ -1,8 +1,11 @@
 package edu.upc.dsa.models;
 
+import edu.upc.dsa.util.RandomUtils;
+
 public class Objetos {
 
-    //id
+    String id;
+    String userId;
     String nombre;
     int coste;
     int puntoSaludRecuperados;
@@ -11,11 +14,20 @@ public class Objetos {
     public Objetos() {
     }
 
-    public Objetos(String nombre, int coste, int puntoSaludRecuperados, int puntosDefensAdd) {
+    public Objetos( String userId,String nombre, int coste, int puntoSaludRecuperados, int puntosDefensAdd) {
+        this.userId = userId;
         this.nombre = nombre;
         this.coste = coste;
         this.puntoSaludRecuperados = puntoSaludRecuperados;
         this.puntosDefensAdd = puntosDefensAdd;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -24,6 +36,14 @@ public class Objetos {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getCoste() {
@@ -53,7 +73,9 @@ public class Objetos {
     @Override
     public String toString() {
         return "Objetos{" +
-                "nombre='" + nombre + '\'' +
+                "ID='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", userId='" + userId + '\'' +
                 ", coste=" + coste +
                 ", puntoSaludRecuperados=" + puntoSaludRecuperados +
                 ", puntosDefensAdd=" + puntosDefensAdd +

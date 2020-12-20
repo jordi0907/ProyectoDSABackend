@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -25,6 +26,7 @@ public class ObjetosService {
 
     private UsuarioManager tm;
     private ObjetosManager om;
+    final static Logger logger = Logger.getLogger(ObjetosService.class);
 
     public ObjetosService() {
         this.tm = UsuarioManagerImpl.getInstance();
@@ -76,6 +78,40 @@ public class ObjetosService {
     }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @GET
+    @ApiOperation(value = "get all Objects", notes = "Devuelve todos los objetos del juego")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Objetos.class, responseContainer="List"),
+    })
+    @Path("/getobjetos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllObjetos() {
+
+        List<Objetos> objetos = this.om.getAllObject();
+
+        GenericEntity<List<Objetos>> entity = new GenericEntity<List<Objetos>>(objetos) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+    @POST
+    @ApiOperation(value = "addobjeto", notes = "Añadir un objeto")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Objetos.class),
+            @ApiResponse(code = 402, message = "Not Enough Credits"),
+            @ApiResponse(code = 409, message = "Conflict, Item Exists in Player"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+    })
+    @Path("/addobjeto")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addObjeto(Objetos o) {
+
+        if(o.getId()==null || o.getUserId()==null)  return Response.status(400).build();
+        if(o.getId().equals("")||o.getUserId().equals("")||o.getUserId().isEmpty()||o.getId().isEmpty()) return Response.status(400).build();
+
+        this.om.addObject(o);
+        return Response.status(201).entity(o).build();
+    }
 
 
 }

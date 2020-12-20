@@ -14,15 +14,6 @@ public interface UsuarioManager {
     public int sizeUser();
     public Usuario addUser(Usuario u);
     public Usuario loggin(Usuario u);
-
-
-   /* public Track addTrack(String title, String singer);
-    public Track addTrack(Track t);
-    public Track getTrack(String id);
-    public List<Track> findAll();
-    public void deleteTrack(String id);
-    public Track updateTrack(Track t);
-
-    public int size();*/
+    public Usuario getUsuarioActualizado(String id);
 
 }

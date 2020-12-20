@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Usuario {
 
-    String idUser; // id del usuario
+    String id; // id del usuario
     String username; // nombre del usuario
     String password; // password del usuario
     int vida; // Vida del usuario
@@ -20,7 +20,7 @@ public class Usuario {
     // lista de objetos.
 
     public Usuario() {
-        this.idUser = RandomUtils.getId();
+        this.id = RandomUtils.getId();
         this.vida = 100;
         this.defensa = 0;
         this.tiempo= 0;
@@ -34,12 +34,12 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getIdUser() {
-        return idUser;
+    public String getId() {
+        return id;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -101,7 +101,7 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "idUser='" + idUser + '\'' +
+                "idUser='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", vida=" + vida +

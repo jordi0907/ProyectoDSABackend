@@ -2,6 +2,7 @@ package edu.upc.dsa;
 
 import edu.upc.dsa.models.Objetos;
 import edu.upc.dsa.models.Usuario;
+import edu.upc.dsa.util.RandomUtils;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -21,11 +22,11 @@ public class ObjetosManagerImpl implements ObjetosManager {
 
     public ObjetosManagerImpl(){
         this.allObjects= new LinkedList<>();
-        this.allObjects.add(new Objetos("mascarilla",25,0,20));
-        this.allObjects.add(new Objetos("pocion",50,50,60));
-        this.allObjects.add(new Objetos("regeneron",100,100,75));
-        this.allObjects.add(new Objetos("pcr",20,0,15));
-        this.allObjects.add(new Objetos("bolsabasura",0,0,1));
+//        this.allObjects.add(new Objetos("mascarilla",25,0,20));
+//        this.allObjects.add(new Objetos("pocion",50,50,0));
+//        this.allObjects.add(new Objetos("regeneron",100,100,75));
+//        this.allObjects.add(new Objetos("pcr",20,0,0));
+//        this.allObjects.add(new Objetos("bolsabasura",0,0,1));
         this.us= UsuarioManagerImpl.getInstance();
 
 
@@ -87,7 +88,55 @@ public class ObjetosManagerImpl implements ObjetosManager {
     }
 
     @Override
-    public void addObject() {
+    public void addObject(Objetos o) {
+        Session session = null;
+        List<String> params= new LinkedList<>();
+        logger.info("objeto: "+ o);
+        try{
+            session = FactorySession.openSession();
+            String query = "INSERT INTO usuarioobjetos(ID, objetoId, usuarioId) VALUES (?,?,?)";
+
+            String ID = RandomUtils.getId();
+            String idObject = o.getId();
+            String idUser = o.getUserId();
+            params.add(ID);
+            params.add(idObject);
+            params.add(idUser);
+
+            session.query(query, Objetos.class, params);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+
+        }
+        finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List<Objetos> getAllObject() {
+        Session session = null;
+        List<Objetos> objetosList = null;
+        List<String> params= new LinkedList<>();
+
+
+        try{
+            session = FactorySession.openSession();
+            String query = "SELECT * FROM objetos";
+            objetosList = (List) session.queryObjects(query, Objetos.class, params);
+            logger.info("objetoslist: " + objetosList);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+
+        }
+        finally {
+            session.close();
+        }
+         return objetosList;
 
     }
+
+
 }
