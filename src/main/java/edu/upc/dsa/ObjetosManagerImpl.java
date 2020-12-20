@@ -123,7 +123,7 @@ public class ObjetosManagerImpl implements ObjetosManager {
 
         try{
             session = FactorySession.openSession();
-            String query = "SELECT * FROM objetos";
+            String query = "SELECT * FROM Objetos";
             objetosList = (List) session.queryObjects(query, Objetos.class, params);
             logger.info("objetoslist: " + objetosList);
         }
