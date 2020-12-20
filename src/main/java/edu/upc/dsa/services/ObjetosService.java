@@ -113,5 +113,4 @@ public class ObjetosService {
         return Response.status(201).entity(o).build();
     }
 
-
 }

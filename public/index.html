@@ -10,16 +10,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
     <script>
-            $(document).ready(function(){
-                $("#frmRegister").hide();
-                $("#frmTable").hide();
-                $("#btnLogin").click(function(){
-                  var userName = $('#username').val();
-                  var password = $('#password').val();
-                  $.ajax({
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
+        $(document).ready(function(){
+            $("#frmRegister").hide();
+            $("#frmLogin").hide();
+            $("#frmTable").hide();
+            //$("#frmShop").hide();
+            $("#ProfileBar").hide();
+            $("#ShopBar").hide();
+            $("#Page1").hide();
+            $("#frmMascarilla").hide();
+            $("#frmPocion").hide();
+            $("#frmRegeneracion").hide();
+            $("#frmPCR").hide();
+            $("#frmBolsaBasura").hide();
+            $("#btnLogin").click(function(){
+                var userName = $('#username').val();
+                var password = $('#password').val();
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
                         },
                         url: "http://localhost:8080/dsaApp/usuario/logginuser",
                         type: "POST",
@@ -27,6 +37,8 @@
                         dataType:'json',
                         success: function (response) {
                         	$("#userId").html(response.idUser);
+                        	idUser = document.querySelector('#userID').value;
+                            $("#ProfileBar").html(response.username);
                             $("#userNameColumn").html(response.username);
                             $("#userVida").html(response.vida+" %");
                             $("#userDefensa").html(response.defensa);
@@ -34,57 +46,341 @@
                             $("#userTiempo").html(response.tiempo);
                             $("#frmLogin").hide();
 					        $("#frmTable").show();
+                            $("#RegisterBar").hide();
+                            $("#LoginBar").hide();
+                            $("#WebBar").hide();
+                            $("#ProfileBar").show();
+                            $("#ShopBar").show();
                         },
                         error: function(error){
                             alert("Wrong username or password.", error);
                         },
-                  });
                 });
-                $("#btnRegisterNow").click(function(){
-                    $("#frmLogin").hide();
-			        $("#frmRegister").show();
-			    });
-			    $("#btnRegister").click(function(){
-                    var NewUserName = $('#NewUserName').val();
-                    var Newpassword = $('#NewPassword').val();
-                    var RepeatNewpassword = $('#RepeatNewPassword').val();
-                    if(Newpassword == RepeatNewpassword){
-                        $.ajax({
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                },
-                                url: "http://localhost:8080/dsaApp/usuario/adduser",
-                                type: "POST",
-                                data: JSON.stringify({"username": NewUserName, "password": Newpassword}),
-                                dataType:'json',
-                                success: function (response) {
-                                    alert("user " + NewUserName + " has been created",response);
-                                    $("#frmRegister").hide();
-                                    $("#frmLogin").show();
-                                },
-                                error: function(error){
-                                    alert("Wrong username or password.", error);
-                                },
-                        });
-                    }
-                    else{
-                        alert("password mismatch");
-                    }
-			    });
-                $("#btnBack").click(function(){
-			    $("#frmTable").hide();
-			    $("#frmLogin").show();
-			    });
             });
+
+		    $("#btnRegister").click(function(){
+                var NewUserName = $('#NewUserName').val();
+                var Newpassword = $('#NewPassword').val();
+                var RepeatNewpassword = $('#RepeatNewPassword').val();
+                if(Newpassword == RepeatNewpassword){
+                    $.ajax({
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            url: "http://localhost:8080/dsaApp/usuario/adduser",
+                            type: "POST",
+                            data: JSON.stringify({"username": NewUserName, "password": Newpassword}),
+                            dataType:'json',
+                            success: function (response) {
+                                alert("user " + NewUserName + " has been created",response);
+                                $("#frmRegister").hide();
+                                $("#frmLogin").show();
+                            },
+                            error: function(error){
+                                alert("Wrong username or password.", error);
+                            },
+                    });
+                    }
+                else{
+                    alert("password mismatch");
+                }
+            });
+
+            $("#btnMascarilla").click(function(){
+                //Comprar el objeto no necesita userid? , "userid": userID
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        type: "POST",
+                        data: JSON.stringify({"id ": "o2", "userId ": idUser}),
+                        dataType:'json',
+                        success: function (response){
+                            $("#frmMascarilla").hide();
+                            $("#frmShop").show();
+                            alert("Objeto comprado");
+                        },
+                        error: function(error){
+                            alert("Error", error);
+                        },
+                });
+            });
+
+            $("#btnPocion").click(function(){
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        type: "POST",
+                        data: JSON.stringify({"id ": "o3", "userId ": idUser}),
+                        dataType:'json',
+                        success: function (response){
+                            $("#frmPocion").hide();
+                            $("#frmShop").show();
+                            alert("Objeto comprado");
+                        },
+                        error: function(error){
+                            alert("Error", error);
+                        },
+                });
+            });
+
+            $("#btnRegeneracion").click(function(){
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        type: "POST",
+                        data: JSON.stringify({"id ": "o4", "userId ": idUser}),
+                        dataType:'json',
+                        success: function (response){
+                            $("#frmRegeneracion").hide();
+                            $("#frmShop").show();
+                            alert("Objeto comprado");
+                        },
+                        error: function(error){
+                            alert("Error", error);
+                        },
+                });
+            });
+
+            $("#btnPCR").click(function(){
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        type: "POST",
+                        data: JSON.stringify({"id ": "o5", "userId ": idUser}),
+                        dataType:'json',
+                        success: function (response){
+                            $("#frmPCR").hide();
+                            $("#frmShop").show();
+                            alert("Objeto comprado");
+                        },
+                        error: function(error){
+                            alert("Error", error);
+                        },
+                });
+            });
+
+            $("#btnBolsaBasura").click(function(){
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        type: "POST",
+                        data: JSON.stringify({"id ": "o1", "userId ": idUser}),
+                        dataType:'json',
+                        success: function (response){
+                            $("#frmBolsaBasura").hide();
+                            $("#frmShop").show();
+                            alert("Objeto comprado");
+                        },
+                        error: function(error){
+                            alert("Error", error);
+                        },
+                });
+            });
+
+            $("#btnBackTable").click(function(){
+			    $("#frmTable").hide();
+			    $("#frmLogin").hide();
+			});
+			$("#btnBackLogin").click(function(){
+			    $("#frmWeb").show();
+                $("#frmLogin").hide();
+                $("#frmRegister").hide();
+                $("#frmTable").hide();
+                $("#frmShop").hide();
+            });
+            $("#btnBackRegister").click(function(){
+			    $("#frmWeb").show();
+                $("#frmLogin").hide();
+                $("#frmRegister").hide();
+                $("#frmTable").hide();
+                $("#frmShop").hide();
+            });
+            $("#btnMascBack").click(function(){
+                $("#frmMascarilla").hide();
+                $("#frmShop").show();
+            });
+            $("#btnPotiBack").click(function(){
+                $("#frmPocion").hide();
+                $("#frmShop").show();
+            });
+            $("#btnRegeBack").click(function(){
+                $("#frmRegeneracion").hide();
+                $("#frmShop").show();
+            });
+            $("#btnPCRBack").click(function(){
+                $("#frmPCR").hide();
+                $("#frmShop").show();
+            });
+            $("#btnBasuraBack").click(function(){
+                $("#frmBolsaBasura").hide();
+                $("#frmShop").show();
+            });
+        });
+    </script>
+    <script>
+        //MenuBar
+        function myShop(){
+            $("#frmShop").show();
+            $("#frmWeb").hide();
+            $("#frmRegister").hide();
+            $("#frmLogin").hide();
+            $("#frmTable").hide();
+        }
+        function myRegister(){
+            $("#frmRegister").show();
+            $("#frmWeb").hide();
+            $("#frmLogin").hide();
+            $("#frmTable").hide();
+            $("#frmShop").hide();
+            $("#frmMascarilla").hide();
+            $("#frmPocion").hide();
+            $("#frmRegeneracion").hide();
+            $("#frmPCR").hide();
+            $("#frmBolsaBasura").hide();
+        }
+        function myLogin(){
+            $("#frmLogin").show();
+            $("#frmWeb").hide();
+            $("#frmRegister").hide();
+            $("#frmTable").hide();
+            $("#frmShop").hide();
+            $("#frmMascarilla").hide();
+            $("#frmPocion").hide();
+            $("#frmRegeneracion").hide();
+            $("#frmPCR").hide();
+            $("#frmBolsaBasura").hide();
+        }
+        function myWeb(){
+            $("#frmWeb").show();
+            $("#frmLogin").hide();
+            $("#frmRegister").hide();
+            $("#frmTable").hide();
+            $("#frmShop").hide();
+            $("#frmMascarilla").hide();
+            $("#frmPocion").hide();
+            $("#frmRegeneracion").hide();
+            $("#frmPCR").hide();
+            $("#frmBolsaBasura").hide();
+        }
+        function myMascara(){
+            $("#frmShop").hide();
+            $("#frmWeb").hide();
+            $("#frmMascarilla").show();
+        }
+        function myPotion(){
+            $("#frmShop").hide();
+            $("#frmWeb").hide();
+            $("#frmPocion").show();
+        }
+        function myRegeneration(){
+            $("#frmShop").hide();
+            $("#frmWeb").hide();
+            $("#frmRegeneracion").show();
+        }
+        function myPCR(){
+            $("#frmShop").hide();
+            $("#frmWeb").hide();
+            $("#frmPCR").show();
+        }
+        function myRubbish(){
+            $("#frmShop").hide();
+            $("#frmWeb").hide();
+            $("#frmBolsaBasura").show();
+        }
+        function myExit(){
+            $("#frmWeb").show();
+            $("#frmLogin").hide();
+            $("#frmRegister").hide();
+            $("#frmTable").hide();
+            $("#frmShop").hide();
+            $("#frmMascarilla").hide();
+            $("#frmPocion").hide();
+            $("#frmRegeneracion").hide();
+            $("#frmPCR").hide();
+            $("#frmBolsaBasura").hide();
+            $("#ProfileBar").hide();
+            $("#RegisterBar").show();
+            $("#LoginBar").show();
+            $("#ShopBar").hide();
+            }
     </script>
     <style>
     </style>
 </head>
 <body style="background-color:rgb(252, 207, 206);">
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" onclick="myWeb()" id="WebBar">Web</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" id="Page1">Page1 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Page 1-1</a></li>
+                    <li><a href="#">Page 1-2</a></li>
+                    <li><a href="#">Page 1-3</a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="myShop()" id="ShopBar"><span></span> Shop</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" id="ProfileBar"><span class="glyphicon glyphicon-user"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="myExit()">Exit</a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="myRegister()" id="RegisterBar"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+            <li><a href="#" onclick="myLogin()" id="LoginBar"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
 <div class="jumbotron" style="padding-top:30px; padding-bottom:30px; background-color:rgb(230, 107, 106); font-family:Creepster;">
     <h1 class="text-center" style="font-size:100px;margin:0px;">Kill the Ratpenat</h1>
 </div>
+
+<form id="frmWeb" style="color:black; text-align:center;">
+    <h2>Principal</h2>
+</form>
+
+<form id="frmRegister" style="color:black; text-align:center;">
+    <div class="modal-body row" >
+        <div class="col-md-6 text-center" style = "font-family:Arial;padding-left:70px">
+            <label style=" font-size:17px; width:150px;" for="NewUserName">Username:</label>
+            <input style=" font-size:17px" type="text" id="NewUserName" name="NewUserName"><br>
+            <label style=" font-size:17px; margin-top:10px; width:150px;" for="NewPassword">Password:</label>
+            <input style=" font-size:17px; margin-top:10px" type="password" id="NewPassword" name="NewPassword"><br>
+            <label style=" font-size:17px; margin-top:10px; width:150px;" for="RepeatNewPassword">Repeat Password:</label>
+            <input style=" font-size:17px; margin-top:10px" type="password" id="RepeatNewPassword" name="RepeatNewPassword"><br>
+            <button style=" font-size:17px; margin-top:20px; background-color:rgb(200,80,80);" type="button" class="btn" id="btnRegister">Register</button>
+            <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnBackRegister">Back</button>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="virusCorona.png" class="img-rounded" style="margin-right:150px">
+        </div>
+    </div>
+    <div>
+
+    </div>
+</form>
+
 <form id="frmLogin" style="color:black; text-align:center;">
     <div class="modal-body row" >
         <div class="col-md-6 text-center" style = "font-family:Arial;padding-left:70px">
@@ -95,9 +391,9 @@
             <input type="password" id="password" name="password">
             <br>
             <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnLogin">Login</button>
+            <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnBackLogin">Back</button>
             <br>
-            <label style=" font-size:15px; margin-top:30px ">Do you not have an account yet?</label><br>
-            <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:15px; margin-top:10px" id="btnRegisterNow">REGISTER NOW</button>
+
         </div>
         <div class="col-md-6 text-center">
             <img src="virusCorona.png" class="img-rounded" style="margin-right:150px">
@@ -105,45 +401,384 @@
     </div>
 </form>
 
-<form id="frmRegister" style="color:black; text-align:center;">
-    <label style=" font-size:17px; width:150px;" for="NewUserName">Username:</label>
-    <input style=" font-size:17px" type="text" id="NewUserName" name="NewUserName"><br>
-    <label style=" font-size:17px; margin-top:10px; width:150px;" for="NewPassword">Password:</label>
-    <input style=" font-size:17px; margin-top:10px" type="password" id="NewPassword" name="NewPassword"><br>
-    <label style=" font-size:17px; margin-top:10px; width:150px;" for="RepeatNewPassword">Repeat Password:</label>
-    <input style=" font-size:17px; margin-top:10px" type="password" id="RepeatNewPassword" name="RepeatNewPassword"><br>
-    <button style=" font-size:17px; margin-top:20px; background-color:rgb(200,80,80);" type="button" class="btn" id="btnRegister">Register</button>
+<form id="frmTable">
+    <h2 style="color:black; text-align:center; font-size:20px;padding-bottom:25px;"><strong>USER INFORMATION</strong></h2>
+    <table class="table table-bordered" id="tablauser" style=" max-width:50%; margin:0 auto;">
+        <tr>
+            <th style="border: 1px solid black; width:170px;">Username</th>
+            <td style="border: 1px solid black;" id="userNameColumn">id</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid black;">ID</th>
+            <td style="border: 1px solid black;" id="userId">title</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid black;">Vida</th>
+            <td style="border: 1px solid black;" id="userVida">title</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid black;">Defensa</th>
+            <td style="border: 1px solid black;" id="userDefensa">title</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid black;">Dinero</th>
+            <td style="border: 1px solid black;" id="userDinero">title</td>
+        </tr>
+        <tr>
+            <th style="border: 1px solid black;">Tiempo</th>
+            <td style="border: 1px solid black;" id="userTiempo">title</td>
+        </tr>
+    </table>
+    <button type="button" class="btn" id="btnBackTable" style="margin-left:25%;margin-top:25px;background-color:rgb(200,80,80);">Change user</button>
 </form>
 
-<form id="frmTable">
-        <h2 style="color:black; text-align:center; font-size:20px;padding-bottom:25px;"><strong>USER INFORMATION</strong></h2>
-        <table class="table table-bordered" id="tablauser" style=" max-width:50%; margin:0 auto;">
-            <tr>
-                <th style="border: 1px solid black; width:170px;">Username</th>
-                <td style="border: 1px solid black;" id="userNameColumn">id</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid black;">ID</th>
-                <td style="border: 1px solid black;" id="userId">title</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid black;">Vida</th>
-                <td style="border: 1px solid black;" id="userVida">title</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid black;">Defensa</th>
-                <td style="border: 1px solid black;" id="userDefensa">title</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid black;">Dinero</th>
-                <td style="border: 1px solid black;" id="userDinero">title</td>
-            </tr>
-            <tr>
-                <th style="border: 1px solid black;">Tiempo</th>
-                <td style="border: 1px solid black;" id="userTiempo">title</td>
-            </tr>
-        </table>
-        <button type="button" class="btn" id="btnBack" style="margin-left:25%;margin-top:25px;background-color:rgb(200,80,80);">Change user</button>
+<form id="frmShop">
+    <h2 style="color:black; text-align:center; font-size:40px;padding-bottom:50px;"><strong>TIENDA</strong></h2>
+
+    <footer><img src="Carrito.png" alt="Workplace" usemap="#workmap" width="600" height="500"></footer>
+
+    <map name="workmap">
+        <area shape="rect" coords="273.13,155.65,352.24,205.23" href="#" onclick="myMascara()">
+        <area shape="rect" coords="204.48,162.53,249.25,207.99" href="#" onclick="myPotion()">
+        <area shape="rect" coords="219.40,252.07,298.51,318.18" href="#" onclick="myRegeneration()">
+        <area shape="rect" coords="370.15,168.04,434.33,206.61" href="#" onclick="myPCR()">
+        <area shape="rect" coords="349.25,271.35,414.93,315.43" href="#" onclick="myRubbish()">
+    </map>
+</form>
+
+<form id="frmMascarilla">
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: White;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
+    <header>
+        <h2>Mascarilla</h2>
+    </header>
+
+    <section>
+        <article>
+            <h1>Mascarilla</h1>
+            <p>Puntos de Salud = 0</p>
+            <p>Puntos de Defensa = 20</p>
+        </article>
+        <aside class="nav navbar-nav"><img src="Mascarilla.png" width="300" height="250"></aside>
+    </section>
+
+    <footer>
+        <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnMascarilla">Precio de 25$</button>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnMascBack">Back</button></aside>
+    </footer>
+
+</form>
+<form id="frmPocion">
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: White;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
+    <header>
+        <h2>Poción</h2>
+    </header>
+
+    <section>
+        <article>
+            <h1>Poción</h1>
+            <p>Puntos de Salud = 50</p>
+            <p>Puntos de Defensa = 60</p>
+        </article>
+        <aside class="nav navbar-nav"><img src="Pocion.png" width="250" height="250"></aside>
+    </section>
+
+    <footer>
+        <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnPocion">Precio de 50$</button>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnPotiBack">Back</button></aside>
+    </footer>
+</form>
+
+<form id="frmRegeneracion">
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: White;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
+    <header>
+        <h2>Regeneración</h2>
+    </header>
+
+    <section>
+        <article>
+            <h1>Regeneración</h1>
+            <p>Puntos de Salud = 100</p>
+            <p>Puntos de Defensa = 75</p>
+        </article>
+        <aside class="nav navbar-nav"><img src="Botiquin.png" width="250" height="250"></aside>
+    </section>
+
+    <footer>
+        <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnRegeneracion">Precio de 100$</button>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnRegeBack">Back</button></aside>
+    </footer>
+</form>
+
+<form id="frmPCR">
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: White;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
+    <header>
+        <h2>PCR</h2>
+    </header>
+
+    <section>
+        <article>
+            <h1>PCR</h1>
+            <p>Puntos de Salud = 0</p>
+            <p>Puntos de Defensa = 15</p>
+        </article>
+        <aside class="nav navbar-nav"><img src="PCR.png" width="250" height="250"></aside>
+    </section>
+
+    <footer>
+        <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnPCR">Precio de 20$</button>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnPCRBack">Back</button></aside>
+    </footer>
+</form>
+
+<form id="frmBolsaBasura">
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: White;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
+    <header>
+        <h2>Bolsa de Basura</h2>
+    </header>
+
+    <section>
+        <article>
+            <h1>Bolsa de Basura</h1>
+            <p>Puntos de Salud = 0</p>
+            <p>Puntos de Defensa = 1</p>
+        </article>
+        <aside class="nav navbar-nav"><img src="BolsaBasura.png" width="200" height="150"></aside>
+    </section>
+
+    <footer>
+        <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnBolsaBasura">Precio de 0$</button>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnBasuraBack">Back</button></aside>
+    </footer>
 </form>
 </body>
 </html>
