@@ -14,7 +14,7 @@
             $("#frmRegister").hide();
             $("#frmLogin").hide();
             $("#frmTable").hide();
-            //$("#frmShop").hide();
+            $("#frmShop").hide();
             $("#ProfileBar").hide();
             $("#ShopBar").hide();
             $("#Page1").hide();
@@ -23,6 +23,8 @@
             $("#frmRegeneracion").hide();
             $("#frmPCR").hide();
             $("#frmBolsaBasura").hide();
+
+            //LOGEAR
             $("#btnLogin").click(function(){
                 var userName = $('#username').val();
                 var password = $('#password').val();
@@ -31,13 +33,25 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "http://localhost:8080/dsaApp/usuario/logginuser",
+                        url: "/dsaApp/usuario/logginuser",
                         type: "POST",
                         data: JSON.stringify({"username": userName, "password": password}),
                         dataType:'json',
                         success: function (response) {
                         	$("#userId").html(response.idUser);
-                        	idUser = document.querySelector('#userID').value;
+                        	//SessionStorage, almacena datos para una sola sesión
+                        	if (typeof(Storage) !== "undefined"){
+                                if (sessionStorage.id){
+                                    sessionStorage.lastname = response.idUser.val(); //¿AÑADIR .val(); O, ("#response.idUser").val(); O, sessionStorage.attr("value", response.idUser); O, sessionStorage.html(response.idUser)?
+                                }
+                                else {
+                                    sessionStorage.id = "No idUser";
+                                }
+                                document.getElementById("result").innerHTML = "Your iduser is save";
+                            }
+                            else {
+                            document.getElementById("result").innerHTML = "your browser does not support web storage";
+                            }
                             $("#ProfileBar").html(response.username);
                             $("#userNameColumn").html(response.username);
                             $("#userVida").html(response.vida+" %");
@@ -53,11 +67,12 @@
                             $("#ShopBar").show();
                         },
                         error: function(error){
-                            alert("Wrong username or password.", error);
+                            //alert("Wrong username or password.", error);
                         },
                 });
             });
 
+            //REGISTRO
 		    $("#btnRegister").click(function(){
                 var NewUserName = $('#NewUserName').val();
                 var Newpassword = $('#NewPassword').val();
@@ -68,17 +83,17 @@
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },
-                            url: "http://localhost:8080/dsaApp/usuario/adduser",
+                            url: "/dsaApp/usuario/adduser",
                             type: "POST",
                             data: JSON.stringify({"username": NewUserName, "password": Newpassword}),
                             dataType:'json',
                             success: function (response) {
-                                alert("user " + NewUserName + " has been created",response);
+                                //alert("user " + NewUserName + " has been created",response);
                                 $("#frmRegister").hide();
                                 $("#frmLogin").show();
                             },
                             error: function(error){
-                                alert("Wrong username or password.", error);
+                                //alert("Wrong username or password.", error);
                             },
                     });
                     }
@@ -87,24 +102,24 @@
                 }
             });
 
+            //COMPRANDO OBJETOS
             $("#btnMascarilla").click(function(){
-                //Comprar el objeto no necesita userid? , "userid": userID
                 $.ajax({
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id ": "o2", "userId ": idUser}),
+                        data: JSON.stringify({"id": "o2", "userId": sessionStorage.id}),
                         dataType:'json',
                         success: function (response){
                             $("#frmMascarilla").hide();
                             $("#frmShop").show();
-                            alert("Objeto comprado");
+                            //alert("Objeto comprado");
                         },
                         error: function(error){
-                            alert("Error", error);
+                            //alert("Error", error);
                         },
                 });
             });
@@ -115,17 +130,17 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id ": "o3", "userId ": idUser}),
+                        data: JSON.stringify({"id": "o3", "userId": sessionStorage.id}),
                         dataType:'json',
                         success: function (response){
                             $("#frmPocion").hide();
                             $("#frmShop").show();
-                            alert("Objeto comprado");
+                            //alert("Objeto comprado");
                         },
                         error: function(error){
-                            alert("Error", error);
+                            //alert("Error", error);
                         },
                 });
             });
@@ -136,17 +151,17 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id ": "o4", "userId ": idUser}),
+                        data: JSON.stringify({"id": "o4", "userId": sessionStorage.id}),
                         dataType:'json',
                         success: function (response){
                             $("#frmRegeneracion").hide();
                             $("#frmShop").show();
-                            alert("Objeto comprado");
+                            //alert("Objeto comprado");
                         },
                         error: function(error){
-                            alert("Error", error);
+                            //alert("Error", error);
                         },
                 });
             });
@@ -157,17 +172,17 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id ": "o5", "userId ": idUser}),
+                        data: JSON.stringify({"id": "o5", "userId": sessionStorage.id}),
                         dataType:'json',
                         success: function (response){
                             $("#frmPCR").hide();
                             $("#frmShop").show();
-                            alert("Objeto comprado");
+                            //alert("Objeto comprado");
                         },
                         error: function(error){
-                            alert("Error", error);
+                            //alert("Error", error);
                         },
                 });
             });
@@ -178,21 +193,22 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "http://localhost:8080/dsaApp/Objetos/addobjeto",
+                        url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id ": "o1", "userId ": idUser}),
+                        data: JSON.stringify({"id": "o1", "userId": sessionStorage.id}),
                         dataType:'json',
                         success: function (response){
                             $("#frmBolsaBasura").hide();
                             $("#frmShop").show();
-                            alert("Objeto comprado");
+                            //alert("Objeto comprado");
                         },
                         error: function(error){
-                            alert("Error", error);
+                            //alert("Error", error);
                         },
                 });
             });
 
+            //BOTONES PARA IR ATRAS
             $("#btnBackTable").click(function(){
 			    $("#frmTable").hide();
 			    $("#frmLogin").hide();
@@ -234,7 +250,7 @@
         });
     </script>
     <script>
-        //MenuBar
+        //MENUBAR
         function myShop(){
             $("#frmShop").show();
             $("#frmWeb").hide();
@@ -393,6 +409,8 @@
             <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnLogin">Login</button>
             <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnBackLogin">Back</button>
             <br>
+
+            <div id="result"></div>
 
         </div>
         <div class="col-md-6 text-center">
