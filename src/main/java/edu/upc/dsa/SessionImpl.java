@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -155,4 +156,29 @@ public class SessionImpl implements Session {
         }
         return objResultado;
     }
+
+    public int update(Object entity) {
+        String[] updateSentenciaCampos = QueryHelper.createQueryUPDATE(entity);
+        String updateQuery = updateSentenciaCampos[0];
+        String[] fieldsOrdenados = Arrays.copyOfRange(updateSentenciaCampos,1,(updateSentenciaCampos.length));
+        PreparedStatement preparedStatement;int affectedRows = 0;
+        try {
+            preparedStatement = conn.prepareStatement(updateQuery);
+            int i = 1;
+            for (String field: fieldsOrdenados) {
+                Object objt = ObjectHelper.getter(entity, field);
+                preparedStatement.setObject(i, objt);
+                i++;
+            }
+            affectedRows = preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return affectedRows;
+    }
+
+
+
+
+
 }

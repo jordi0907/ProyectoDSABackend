@@ -103,6 +103,20 @@ public class UsuarioService {
         else  return Response.status(201).entity(u).build();
     }
 
+    @PUT
+    @ApiOperation(value = "update User", notes = "updates User and returns code result")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Usuario.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
+    @Path("/updateuser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(Usuario usuario) {
+        usuario = this.tm.updateUser(usuario);
+        if(usuario == null) return Response.status(404).build();
+        return Response.status(201).entity(usuario).build();
+    }
 
 
 

@@ -12,7 +12,7 @@ public interface ObjetosManager {
     public Objetos getObjectUser(Usuario user, String objectName);// Devuelve un objeto especifico de un usuario
     public void deleteObject(Usuario user, String objectName); // acceder a la lista de objetos y buscarlo por el nombre
 
-    public void addObject(Objetos o);
+    public boolean addObject(Objetos o);
 
     public List<Objetos> getAllObject();
 

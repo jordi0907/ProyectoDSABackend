@@ -33,6 +33,7 @@ public class ObjetosService {
         this.om= ObjetosManagerImpl.getInstance();
     }
 
+/*
     @GET
     @ApiOperation(value = "get all Objects", notes = "Devuelve todos los objetos del juego")
     @ApiResponses(value = {
@@ -76,6 +77,7 @@ public class ObjetosService {
         if (o == null) return Response.status(404).build();
         else  return Response.status(201).entity(o).build();
     }
+*/
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,8 +111,11 @@ public class ObjetosService {
         if(o.getId()==null || o.getUserId()==null)  return Response.status(400).build();
         if(o.getId().equals("")||o.getUserId().equals("")||o.getUserId().isEmpty()||o.getId().isEmpty()) return Response.status(400).build();
 
-        this.om.addObject(o);
-        return Response.status(201).entity(o).build();
+        if(this.om.addObject(o) == true){
+            return Response.status(201).entity(o).build();
+        }
+        else return Response.status(402).build();
+
     }
 
 

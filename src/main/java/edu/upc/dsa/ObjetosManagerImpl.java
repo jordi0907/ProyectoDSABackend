@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ObjetosManagerImpl implements ObjetosManager {
 
+
     private static ObjetosManager instance;
     final static Logger logger = Logger.getLogger(ObjetosManagerImpl.class);
     protected List<Objetos> allObjects;
@@ -88,29 +89,46 @@ public class ObjetosManagerImpl implements ObjetosManager {
     }
 
     @Override
-    public void addObject(Objetos o) {
+    public boolean addObject(Objetos o) {
         Session session = null;
         List<String> params= new LinkedList<>();
         logger.info("objeto: "+ o);
-        try{
-            session = FactorySession.openSession();
-            String query = "INSERT INTO usuarioobjetos(ID, objetoId, usuarioId) VALUES (?,?,?)";
+        Usuario user = us.getUsuarioActualizado(o.getUserId());
+        int coste = o.getCoste();
+        int dinero = us.getUsuarioActualizado(o.getUserId()).getDinero();
+        int dineroFinal = dinero-coste;
 
-            String ID = RandomUtils.getId();
-            String idObject = o.getId();
-            String idUser = o.getUserId();
-            params.add(ID);
-            params.add(idObject);
-            params.add(idUser);
-
-            session.query(query, Objetos.class, params);
+        if (coste>dinero)
+        {
+            logger.info("No hay dinero");
+            return false;
         }
-        catch(Exception e) {
+        else{
+            user.setDinero(dineroFinal);
+            us.updateUser(user);
+
+            try{
+                session = FactorySession.openSession();
+                String query = "INSERT INTO usuarioobjetos(ID, objetoId, usuarioId) VALUES (?,?,?)";
+
+                String ID = RandomUtils.getId();
+                String idObject = o.getId();
+                String idUser = o.getUserId();
+                params.add(ID);
+                params.add(idObject);
+                params.add(idUser);
+
+                session.query(query, Objetos.class, params);
+             }
+            catch(Exception e) {
             e.printStackTrace();
 
-        }
-        finally {
-            session.close();
+            }
+            finally {
+               session.close();
+            }
+
+        return true;
         }
     }
 
@@ -123,7 +141,7 @@ public class ObjetosManagerImpl implements ObjetosManager {
 
         try{
             session = FactorySession.openSession();
-            String query = "SELECT * FROM Objetos";
+            String query = "SELECT * FROM objetos";
             objetosList = (List) session.queryObjects(query, Objetos.class, params);
             logger.info("objetoslist: " + objetosList);
         }
