@@ -106,10 +106,12 @@ public class SessionImpl implements Session {
             int i = 1;
             for(Object obj: params){
                 pstm.setObject(i, params.get(i-1));
+                logger.info("EL PARAMETRO ES " +params.get(i-1) );
                 i++;
             }
 
             ResultSet resultSet = pstm.executeQuery();
+            logger.info("ELRESULTADO DE LA QUERY OBJETOS " +resultSet );
             while(resultSet.next()) {
                 ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
                 for(int j=1;j<=resultSetMetaData.getColumnCount();j++){
@@ -177,8 +179,28 @@ public class SessionImpl implements Session {
         return affectedRows;
     }
 
-
-
+    @Override
+    public int delete(Object object) {
+        String delete = QueryHelper.createQueryDELETE(object);
+        int affectedRows = 0;
+        PreparedStatement pstm = null;
+        try {
+            pstm=conn.prepareStatement(delete);
+            for(String field: ObjectHelper.getStrFields(object)){
+                if(field.equals("id")) {
+                    pstm.setObject(1, ObjectHelper.getter(object, field));
+                }
+                if(field.equals("ID")) {
+                    pstm.setObject(1, ObjectHelper.getter(object, field));
+                }
+            }
+            affectedRows = pstm.executeUpdate();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return affectedRows;
+    }
 
 
 }

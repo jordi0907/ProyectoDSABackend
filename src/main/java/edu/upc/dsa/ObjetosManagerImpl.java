@@ -5,6 +5,7 @@ import edu.upc.dsa.models.Usuario;
 import edu.upc.dsa.util.RandomUtils;
 import org.apache.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ public class ObjetosManagerImpl implements ObjetosManager {
     final static Logger logger = Logger.getLogger(ObjetosManagerImpl.class);
     protected List<Objetos> allObjects;
     UsuarioManager us;
+
    // protected Usuario user;
 
 
@@ -153,6 +155,36 @@ public class ObjetosManagerImpl implements ObjetosManager {
             session.close();
         }
          return objetosList;
+
+    }
+
+    @Override
+    public int deleteObjectUsuario(Objetos o) {
+        Session session = null;
+        List<String> params= new LinkedList<>();
+        logger.info("deleteobjeto: " + o.getUserId());
+        try{
+            session = FactorySession.openSession();
+
+            String query = "DELETE from usuarioobjetos WHERE objetoId = ? and usuarioId = ? limit 1";
+
+            String idObject = o.getId();
+            String idUser = o.getUserId();
+            params.add(idObject);
+            params.add(idUser);
+            session.query(query, Objetos.class, params);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return 1;
+
+        }
+        finally {
+            session.close();
+        }
+
+        return 0;
+
 
     }
 

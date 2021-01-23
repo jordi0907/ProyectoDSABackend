@@ -118,4 +118,23 @@ public class ObjetosService {
 
     }
 
+    @PUT
+    @ApiOperation(value = "borrar un objeto de un usuario", notes = "usar un objeto de un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Objetos.class),
+            @ApiResponse(code = 400, message = "Bad Request"),
+    })
+    @Path("/deleteobjetousario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteObjetos(Objetos o) {
+        int resultado = this.om.deleteObjectUsuario(o);
+        if(resultado == 0){
+            return Response.status(201).entity(o).build();
+        }
+        else return Response.status(402).build();
+
+
+
+    }
+
 }

@@ -75,6 +75,14 @@ public class QueryHelper {
         }
         return orderArry;
     }
+    public static String createQueryDELETE(Object entity){
+        StringBuffer sb = new StringBuffer("DELETE FROM ");
+        sb.append(entity.getClass().getSimpleName()).append(" ");
+        sb.append("WHERE id = ?");
+        return sb.toString();
+    }
+
+
 
 }
 

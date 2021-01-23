@@ -14,7 +14,9 @@ public interface ObjetosManager {
 
     public boolean addObject(Objetos o);
 
+
     public List<Objetos> getAllObject();
+    int deleteObjectUsuario(Objetos o);
 
 
 }
