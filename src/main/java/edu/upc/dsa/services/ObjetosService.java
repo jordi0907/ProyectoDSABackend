@@ -97,7 +97,7 @@ public class ObjetosService {
 
     }
     @POST
-    @ApiOperation(value = "addobjeto", notes = "Añadir un objeto")
+    @ApiOperation(value = "addobjeto para un usuario dado", notes = "Añadir un objeto")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Objetos.class),
             @ApiResponse(code = 402, message = "No hay sufiente dinero"),
@@ -123,7 +123,7 @@ public class ObjetosService {
             @ApiResponse(code = 201, message = "Successful", response = Objetos.class),
             @ApiResponse(code = 400, message = "Bad Request"),
     })
-    @Path("/deleteobjetousario")
+    @Path("/deleteobjetousuario")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteObjetos(Objetos o) {
         int resultado = this.om.deleteObjectUsuario(o);

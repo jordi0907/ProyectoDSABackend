@@ -84,7 +84,7 @@ public class UsuarioService {
 
 
     @GET
-    @ApiOperation(value = "get Usuario Actualizado ", notes = "asdasd")
+    @ApiOperation(value = "get Usuario Actualizado con objetos", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Usuario.class),
             @ApiResponse(code = 404, message = "Usuario not found")
@@ -146,7 +146,7 @@ public class UsuarioService {
     }
 
     @PUT
-    @ApiOperation(value = "Borrar Uruario", notes = "Borrar Usuario")
+    @ApiOperation(value = "Borrar Usuario", notes = "Borrar Usuario")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "Not Found"),

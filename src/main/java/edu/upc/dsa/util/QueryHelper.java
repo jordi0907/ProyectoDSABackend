@@ -56,6 +56,34 @@ public class QueryHelper {
         String [] fields = ObjectHelper.getStrFields(entity);
 
         for (String field: fields) {
+           /* if(field.equals("password")){
+                sb.append(field).append(" = AES_ENCRYPT(?,'thePassword'),");
+                fieldsOrdered.add("password");
+            }*/
+            if((!field.equals("id")) || (!field.equals("password"))){
+                fieldsOrdered.add(field);
+                sb.append(field).append(" = ?,");
+            }
+        }
+        sb.deleteCharAt(sb.length()-1);
+        sb.append(" WHERE id = ?");
+        fieldsOrdered.add("id");
+        String[] orderArry = new String[fieldsOrdered.size()+1];
+        orderArry[0]= sb.toString();
+        for(int k = 0;k<fieldsOrdered.size();k++){
+            orderArry[k+1] = fieldsOrdered.get(k);
+        }
+        return orderArry;
+    }
+
+    public static String[] createQueryPasswordUPDATE(Object entity) {
+        StringBuffer sb = new StringBuffer("UPDATE ");
+        List<String> fieldsOrdered = new LinkedList<>();
+        sb.append(entity.getClass().getSimpleName());
+        sb.append(" SET ");
+        String [] fields = ObjectHelper.getStrFields(entity);
+
+        for (String field: fields) {
             if(field.equals("password")){
                 sb.append(field).append(" = AES_ENCRYPT(?,'thePassword'),");
                 fieldsOrdered.add("password");

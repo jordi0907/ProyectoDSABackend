@@ -138,7 +138,8 @@ public class UsuarioManagerImpl implements UsuarioManager{
             session.close();
         }
         logger.info("retorna el usuario" + usuario);
-        //usuario.setPassword("");
+       // usuario.setPassword(password);
+
         return usuario;
     }
 
@@ -223,6 +224,11 @@ public class UsuarioManagerImpl implements UsuarioManager{
 
     }
 
+    @Override
+    public Usuario updatePassword(Usuario user) {
+        return null;
+    }
+
 
     public List<Usuario> listarUsuarioRankingAsc(List<Usuario> list) {
 
@@ -262,6 +268,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
 
     @Override
     public Usuario updateUser(Usuario user) {
+        String passwordOriginal = user.getPassword();
         Session session = null;
         try {
             session = FactorySession.openSession();
@@ -278,6 +285,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
             if(session!=null)
                 session.close();
         }
+        //user.setPassword(passwordOriginal);
         return user;
 
     }

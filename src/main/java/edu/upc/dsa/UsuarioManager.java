@@ -19,6 +19,7 @@ public interface UsuarioManager {
     public Usuario getUsuarioActualizado(String id);
     public List<Usuario> getRankingUsuarios();
     public Usuario getUpdateFinalPartida(Usuario u);
+    public Usuario updatePassword(Usuario user);
 
 
 }
