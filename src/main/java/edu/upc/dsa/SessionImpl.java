@@ -202,5 +202,30 @@ public class SessionImpl implements Session {
         return affectedRows;
     }
 
+    @Override
+    public List<Object> findAll(Class theClass) {
+        PreparedStatement pstm = null;
+        //Instantiating a object of type class for the getters
+        List<Object> objList = new LinkedList<>();
+        try {
+            String selectQuery = QueryHelper.createQuerySELECTALL(theClass.newInstance());
+            pstm = conn.prepareStatement(selectQuery);
+            ResultSet resultSet = pstm.executeQuery();
+            while(resultSet.next()) {
+                Object obj = theClass.newInstance();
+                ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+                for(int i=1;i<=resultSetMetaData.getColumnCount();i++){
+                    String name = resultSetMetaData.getColumnName(i);
+                    obj = ObjectHelper.setter(obj,name, resultSet.getObject(i));
+                }
+                objList.add(obj);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return objList;
+    }
+
 
 }

@@ -5,6 +5,7 @@ import edu.upc.dsa.TracksManager;
 import edu.upc.dsa.TracksManagerImpl;
 import edu.upc.dsa.UsuarioManager;
 import edu.upc.dsa.UsuarioManagerImpl;
+import edu.upc.dsa.models.Objetos;
 import edu.upc.dsa.models.Track;
 import edu.upc.dsa.models.Usuario;
 import io.swagger.annotations.Api;
@@ -14,9 +15,11 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
+import java.util.List;
 
 @Api(value = "/usuario", description = "Endpoint to usuario Service")
 @Path("/usuario")
@@ -28,15 +31,8 @@ public class UsuarioService {
     public UsuarioService() {
         this.tm = UsuarioManagerImpl.getInstance();
 
-        //testRun();
-    }
 
-    /*private void testRun() {
-        if (tm.sizeUser()==0) {
-            Usuario jessi = new Usuario("jessi", "hola");
-            this.tm.addUser(jessi);
-        }
-    }*/
+    }
 
 
     @POST
@@ -91,7 +87,7 @@ public class UsuarioService {
     @ApiOperation(value = "get Usuario Actualizado ", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Usuario.class),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 404, message = "Usuario not found")
     })
     @Path("/gettuser/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -118,6 +114,54 @@ public class UsuarioService {
         return Response.status(201).entity(usuario).build();
     }
 
+    @GET
+    @ApiOperation(value = "get all Usuarios", notes = "Devuelve todos los Usuairos del juego")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Usuario.class, responseContainer="List"),
+    })
+    @Path("/getranking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRanking() {
+
+        List<Usuario> usuarioList = this.tm.getRankingUsuarios();
+
+        GenericEntity<List<Usuario>> entity = new GenericEntity<List<Usuario>>(usuarioList) {};
+        return Response.status(201).entity(entity).build()  ;
+
+    }
+
+    @PUT
+    @ApiOperation(value = "update FinalPartida", notes = "updates User and returns code result")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Usuario.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
+    @Path("/finalpartida")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response finalPartidaUser(Usuario usuario) {
+        usuario = this.tm.getUpdateFinalPartida(usuario);
+        if(usuario == null) return Response.status(404).build();
+        return Response.status(201).entity(usuario).build();
+    }
+
+    @PUT
+    @ApiOperation(value = "Borrar Uruario", notes = "Borrar Usuario")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
+    @Path("/deletePlayer")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePlayer(Usuario user) {
+        if(user.getId() ==null) return Response.status(400).build();
+        if (user.getId()==""||user.getId().isEmpty())  return Response.status(400).build();
+
+        int res = this.tm.deleteUser(user.getId());
+        if(res <=0) return Response.status(404).build();
+        return Response.status(201).build();
+    }
 
 
 

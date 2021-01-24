@@ -100,8 +100,7 @@ public class ObjetosService {
     @ApiOperation(value = "addobjeto", notes = "Añadir un objeto")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Objetos.class),
-            @ApiResponse(code = 402, message = "Not Enough Credits"),
-            @ApiResponse(code = 409, message = "Conflict, Item Exists in Player"),
+            @ApiResponse(code = 402, message = "No hay sufiente dinero"),
             @ApiResponse(code = 400, message = "Bad Request"),
     })
     @Path("/addobjeto")
@@ -132,8 +131,6 @@ public class ObjetosService {
             return Response.status(201).entity(o).build();
         }
         else return Response.status(402).build();
-
-
 
     }
 

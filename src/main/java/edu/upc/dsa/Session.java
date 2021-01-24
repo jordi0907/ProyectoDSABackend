@@ -14,4 +14,5 @@ public interface Session<E> {
     List<Object> queryObjects(String query, Class theClass, List params);
     int update(Object object);
     int delete(Object object);
+    List<Object> findAll(Class theClass) ;
 }

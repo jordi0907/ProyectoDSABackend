@@ -4,10 +4,7 @@ import edu.upc.dsa.models.Objetos;
 import edu.upc.dsa.models.Usuario;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class UsuarioManagerImpl implements UsuarioManager{
 
@@ -72,6 +69,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
         finally {
             session.close();
         }
+        u.setPassword("");
         return u;
     }
 
@@ -140,6 +138,7 @@ public class UsuarioManagerImpl implements UsuarioManager{
             session.close();
         }
         logger.info("retorna el usuario" + usuario);
+        //usuario.setPassword("");
         return usuario;
     }
 
@@ -178,6 +177,67 @@ public class UsuarioManagerImpl implements UsuarioManager{
         }
         return usuario;
     }
+
+    @Override
+    public List<Usuario> getRankingUsuarios() {
+        Session session = null;
+        List<Usuario> usuarioList2 = null;
+        List<Usuario> usuarioListRanking= null;
+
+        try {
+            session = FactorySession.openSession();
+            usuarioList2 = session.findAll(Usuario.class);
+
+        }
+        catch (Exception e) {
+            // LOG
+            e.printStackTrace();
+        }
+        finally {
+            if(session!=null)
+                session.close();
+        }
+        usuarioListRanking = listarUsuarioRankingAsc(usuarioList2);
+        return usuarioListRanking;
+    }
+
+    @Override
+    public Usuario getUpdateFinalPartida(Usuario u) {
+        Usuario user = getUsuarioActualizado(u.getId());
+        int puntuacionBBDD = u.getTiempo();
+        int puntuacion;
+        Usuario u2 = null;
+        puntuacion = u.getDinero() + u.getVida();
+
+        if(puntuacion>puntuacionBBDD)
+        {
+            u.setTiempo(puntuacion);
+            u2 = updateUser(u);
+        }
+        else {
+            u.setTiempo(puntuacionBBDD);
+            u2 = updateUser(u);
+
+        }
+        return u2;
+
+    }
+
+
+    public List<Usuario> listarUsuarioRankingAsc(List<Usuario> list) {
+
+          Collections.sort(list, new Comparator<Usuario>() {
+            @Override
+            public int compare(Usuario p1, Usuario p2) {
+
+                logger.info("comparing por precio primer product: " +p1 +" segundo product: " +p2);
+                return (int)(p2.getTiempo()-p1.getTiempo());
+            }
+        });
+        logger.info("return lista de productos ordenada por precio " + list.toString());
+        return list;
+    }
+
 
 
 //    @Override
@@ -223,8 +283,23 @@ public class UsuarioManagerImpl implements UsuarioManager{
     }
 
     @Override
-    public void deleteUser(String idUser) {
-
+    public int deleteUser(String idUser) {
+        Usuario user = getUsuarioActualizado(idUser);
+        int res;
+        Session session = null;
+        try {
+            session = FactorySession.openSession();
+            res =  session.delete(user);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            res = -1;
+        }
+        finally {
+            if(session!=null)
+                session.close();
+        }
+        return res;
     }
 
     @Override
