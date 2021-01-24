@@ -15,4 +15,5 @@ public interface Session<E> {
     int update(Object object);
     int delete(Object object);
     List<Object> findAll(Class theClass) ;
+    int updatePassword(Object object);
 }

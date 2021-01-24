@@ -163,6 +163,21 @@ public class UsuarioService {
         return Response.status(201).build();
     }
 
+    @PUT
+    @ApiOperation(value = "update Password", notes = "updatesPassword and returns code result")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Usuario.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 400, message = "Bad Request")
+    })
+    @Path("/updatepassword")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePassword(Usuario usuario) {
+        usuario = this.tm.updatePassword(usuario);
+        if(usuario == null) return Response.status(404).build();
+        return Response.status(201).entity(usuario).build();
+    }
+
 
 
 

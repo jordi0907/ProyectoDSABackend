@@ -226,7 +226,25 @@ public class UsuarioManagerImpl implements UsuarioManager{
 
     @Override
     public Usuario updatePassword(Usuario user) {
-        return null;
+        String passwordOriginal = user.getPassword();
+        Session session = null;
+        try {
+            session = FactorySession.openSession();
+            if(session.updatePassword(user)<=0)
+            {
+                user =  null;
+            }
+        }
+        catch (Exception e) {
+            // LOG
+            e.printStackTrace();
+        }
+        finally {
+            if(session!=null)
+                session.close();
+        }
+        //user.setPassword(passwordOriginal);
+        return user;
     }
 
 

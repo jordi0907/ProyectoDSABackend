@@ -227,5 +227,26 @@ public class SessionImpl implements Session {
         return objList;
     }
 
+    @Override
+    public int updatePassword(Object entity) {
+        String[] updateSentenciaCampos = QueryHelper.createQueryPasswordUPDATE(entity);
+        String updateQuery = updateSentenciaCampos[0];
+        String[] fieldsOrdenados = Arrays.copyOfRange(updateSentenciaCampos,1,(updateSentenciaCampos.length));
+        PreparedStatement preparedStatement;int affectedRows = 0;
+        try {
+            preparedStatement = conn.prepareStatement(updateQuery);
+            int i = 1;
+            for (String field: fieldsOrdenados) {
+                Object objt = ObjectHelper.getter(entity, field);
+                preparedStatement.setObject(i, objt);
+                i++;
+            }
+            affectedRows = preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return affectedRows;
+    }
+
 
 }
