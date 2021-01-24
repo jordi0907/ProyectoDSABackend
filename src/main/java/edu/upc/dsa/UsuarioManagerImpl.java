@@ -108,8 +108,8 @@ public class UsuarioManagerImpl implements UsuarioManager{
         logger.info("El ID es " + u.getId());
         String username = u.getUsername();
         String password = u.getPassword();
-        //String query = "SELECT id FROM Usuario WHERE username = ? AND password = AES_ENCRYPT(?,'thePassword')";
-        String query = "SELECT id FROM usuario WHERE username = ? AND password = AES_ENCRYPT(?,'thePassword')";
+        String query = "SELECT id FROM Usuario WHERE username = ? AND password = AES_ENCRYPT(?,'thePassword')";
+        //String query = "SELECT id FROM usuario WHERE username = ? AND password = AES_ENCRYPT(?,'thePassword')";
         String query2 = "SELECT objetoId FROM usuarioobjetos WHERE usuarioId = ?";
 
         List<String> params= new LinkedList<>();
@@ -150,8 +150,8 @@ public class UsuarioManagerImpl implements UsuarioManager{
         Usuario usuario = null;
         List<Objetos> objetosList=new LinkedList<>();
         logger.info("El id es : " + id);
-        //String query = "SELECT * FROM Usuario where id = ?";
-        String query = "SELECT * FROM usuario where id = ?";
+        String query = "SELECT * FROM Usuario where id = ?";
+        //String query = "SELECT * FROM usuario where id = ?";
         String query2 = "SELECT objetoId FROM usuarioobjetos WHERE usuarioId = ?";
         Usuario Usuario;
         List<String> params= new LinkedList<>();
