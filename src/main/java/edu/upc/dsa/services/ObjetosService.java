@@ -1,8 +1,5 @@
 package edu.upc.dsa.services;
-import edu.upc.dsa.*;
-import edu.upc.dsa.models.Track;
 import edu.upc.dsa.models.Objetos;
-import edu.upc.dsa.models.Usuario;
 import edu.upc.dsa.UsuarioManager;
 import edu.upc.dsa.UsuarioManagerImpl;
 import edu.upc.dsa.ObjetosManager;
@@ -17,7 +14,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Arrays;
 import java.util.List;
 
 @Api(value = "/Objetos", description = "Endpoint to Objetos Service")

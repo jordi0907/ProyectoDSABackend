@@ -143,6 +143,7 @@ public class ObjetosManagerImpl implements ObjetosManager {
 
         try{
             session = FactorySession.openSession();
+            //String query = "SELECT * FROM Objetos";
             String query = "SELECT * FROM objetos";
             objetosList = (List) session.queryObjects(query, Objetos.class, params);
             logger.info("objetoslist: " + objetosList);

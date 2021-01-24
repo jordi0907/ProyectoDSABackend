@@ -22,8 +22,8 @@ public class FactorySession {
 
         try {
 
-            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/covid?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=root&password=covid19");
-
+            //conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/covid?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=root&password=covid19");
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/covid?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=admin&password=covid19");
 
         } catch (SQLException ex) {
             // handle any errors
