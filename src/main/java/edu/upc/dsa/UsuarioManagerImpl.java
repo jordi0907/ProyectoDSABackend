@@ -214,10 +214,16 @@ public class UsuarioManagerImpl implements UsuarioManager{
         if(puntuacion>puntuacionBBDD)
         {
             u.setTiempo(puntuacion);
+            u.setDinero(100);
+            u.setDefensa(0);
+            u.setVida(100);
             u2 = updateUser(u);
         }
         else {
             u.setTiempo(puntuacionBBDD);
+            u.setDinero(100);
+            u.setDefensa(0);
+            u.setVida(100);
             u2 = updateUser(u);
 
         }

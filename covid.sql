@@ -21,6 +21,12 @@ CREATE TABLE Objetos(
 	puntosDefensAdd INT	
 )ENGINE = InnoDB;
 
+CREATE TABLE Mapa(
+	id VARCHAR(32) PRIMARY KEY NOT NULL,
+	nombre VARCHAR(255),
+	dato VARCHAR(1000)
+)ENGINE = InnoDB;
+
 CREATE TABLE usuarioobjetos(ID VARCHAR(32) UNIQUE, objetoId VARCHAR(32), usuarioId VARCHAR(32));
 
 
@@ -37,6 +43,9 @@ INSERT INTO Objetos (id,nombre,coste,puntoSaludRecuperados,puntosDefensAdd) VALU
 INSERT INTO Objetos (id,nombre,coste,puntoSaludRecuperados,puntosDefensAdd) VALUES ('o5','pcr',20,0,0);
 INSERT INTO usuarioobjetos(ID, objetoId, usuarioId) VALUES  ('uo1','o1','u1');
 INSERT INTO usuarioobjetos(ID, objetoId, usuarioId) VALUES  ('uo2','o2','u1');
+INSERT INTO Mapa (id,nombre,dato) VALUES ('m1','mapa1',"MMMMEEEMMMMIMMMMMEEEMMMMMMMMM;EEEEEEEEIIIIIIEEEEEEEE;ASSSAAAIIIAAAAAAAAAAA");
+INSERT INTO Mapa (id,nombre,dato) VALUES ('m2','mapa1',"MMAAAAMMMMSSSSMMMMMMIIIIMMMMM;EEEOOOEEEEEEEEEEAAEEEE;ASSSAAAAAAAAAAOOOOAAA");
+INSERT INTO Mapa (id,nombre,dato) VALUES ('m3','mapa1',"MMMAAAAMMMMMMMMEEEEMMMMMMMMMM;EEEEEEEEEEEEEIIIIIEEEE;ASSSAAAAIIIIOOAAAAAAAA");
 COMMIT;
 
 

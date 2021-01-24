@@ -147,9 +147,9 @@ public class UsuarioService {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 400, message = "Bad Request")
     })
-    @Path("/deletePlayer")
+    @Path("/deleteuser")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePlayer(Usuario user) {
+    public Response deleteUser(Usuario user) {
         if(user.getId() ==null) return Response.status(400).build();
         if (user.getId()==""||user.getId().isEmpty())  return Response.status(400).build();
 
