@@ -9,6 +9,20 @@
     <link rel="shortcut icon" href="virusCoronaLogo.jpg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+    width: 40%;
+    height: 40%;
+  }
+  </style>
+
+
     <script>
         $(document).ready(function(){
             $("#frmRegister").hide();
@@ -23,6 +37,7 @@
             $("#frmRegeneracion").hide();
             $("#frmPCR").hide();
             $("#frmBolsaBasura").hide();
+            myStorage = window.localStorage;
 
             //LOGEAR
             $("#btnLogin").click(function(){
@@ -38,20 +53,25 @@
                         data: JSON.stringify({"username": userName, "password": password}),
                         dataType:'json',
                         success: function (response) {
+                            myStorage.setItem("user",response.username);
+                            myStorage.setItem("password",response.password);
+                            myStorage.setItem("id",response.id);
+                            console.log("User Found in Storage: "+myStorage.getItem("user"));
                         	$("#userId").html(response.idUser);
                         	//SessionStorage, almacena datos para una sola sesión
-                        	if (typeof(Storage) !== "undefined"){
-                                if (sessionStorage.id){
-                                    sessionStorage.lastname = response.idUser.val(); //¿AÑADIR .val(); O, ("#response.idUser").val(); O, sessionStorage.attr("value", response.idUser); O, sessionStorage.html(response.idUser)?
-                                }
-                                else {
-                                    sessionStorage.id = "No idUser";
-                                }
-                                document.getElementById("result").innerHTML = "Your iduser is save";
-                            }
-                            else {
-                            document.getElementById("result").innerHTML = "your browser does not support web storage";
-                            }
+                  //      	if (typeof(Storage) !== "undefined"){
+                  //              if (sessionStorage.id){
+                  //                  sessionStorage.lastname = response.idUser.val(); //¿AÑADIR .val(); O, ("#response.idUser").val(); O, sessionStorage.attr("value", response.idUser); O, sessionStorage.html(response.idUser)?
+                  //              }
+                  //              else {
+                  //                  sessionStorage.id = "No idUser";
+                  //              }
+                  //              document.getElementById("result").innerHTML = "Your iduser is save";
+                  //          }
+                  //          else {
+                  //          document.getElementById("result").innerHTML = "your browser does not support web storage";
+                  //          }
+                            console.log("Accediendo a la tabla");
                             $("#ProfileBar").html(response.username);
                             $("#userNameColumn").html(response.username);
                             $("#userVida").html(response.vida+" %");
@@ -65,9 +85,19 @@
                             $("#WebBar").hide();
                             $("#ProfileBar").show();
                             $("#ShopBar").show();
+                            message = '"Usuario ha accedido correctamente WELL DONE !!!! Vamos a por el COVID"';
+                            $('#alerts2').append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                         error: function(error){
                             //alert("Wrong username or password.", error);
+                            message = '"Wrong username or password."';
+                            $('#alerts').append(
+                            '<div class="alert alert-danger ">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                 });
             });
@@ -94,11 +124,21 @@
                             },
                             error: function(error){
                                 //alert("Wrong username or password.", error);
+                            message = '"Wrong username or password."';
+                            $('#alerts').append(
+                            '<div class="alert alert-danger">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                             },
                     });
                     }
                 else{
-                    alert("password mismatch");
+                    //alert("password mismatch");
+                    message = '"Wrong username or password."';
+                            $('#alerts').append(
+                            '<div class="alert alert-danger ">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                 }
             });
 
@@ -111,15 +151,30 @@
                         },
                         url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id": "o2", "userId": sessionStorage.id}),
+                        data: JSON.stringify({"id": "o2", "userId": myStorage.getItem("id"), "coste":25}),
                         dataType:'json',
                         success: function (response){
                             $("#frmMascarilla").hide();
                             $("#frmShop").show();
                             //alert("Objeto comprado");
+                             message = '"Mascarilla comprada, JODER lo que cuestan, SIMON baja el precio!!!"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
+
+
                         },
                         error: function(error){
                             //alert("Error", error);
+                            $("#frmMascarilla").hide();
+                            $("#frmShop").show();
+                             message = '"Error al comprar la mascarilla, NO TIENES SUFICIENTE DINERO"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-danger ">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
+
                         },
                 });
             });
@@ -132,15 +187,27 @@
                         },
                         url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id": "o3", "userId": sessionStorage.id}),
+                        data: JSON.stringify({"id": "o3", "userId": myStorage.getItem("id"),"coste":50}),
                         dataType:'json',
                         success: function (response){
                             $("#frmPocion").hide();
                             $("#frmShop").show();
                             //alert("Objeto comprado");
+                            message = '"Pocion comprada, XD que funcione lo que me ha vendido el curandero"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                         error: function(error){
                             //alert("Error", error);
+                            $("#frmPocion").hide();
+                            $("#frmShop").show();
+                            message = '"Error al comprar la pocion, NO TIENES SUFICIENTE DINERO"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-danger ">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                 });
             });
@@ -153,15 +220,27 @@
                         },
                         url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id": "o4", "userId": sessionStorage.id}),
+                        data: JSON.stringify({"id": "o4", "userId": myStorage.getItem("id"), "coste":100}),
                         dataType:'json',
                         success: function (response){
                             $("#frmRegeneracion").hide();
                             $("#frmShop").show();
                             //alert("Objeto comprado");
+                             message = '"Regeneron comprada, XD que funcione y no sea un TIMO"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                         error: function(error){
                             //alert("Error", error);
+                            $("#frmRegeneracion").hide();
+                            $("#frmShop").show();
+                            message = '"Error al comprar la Regeneron, NO TIENES SUFICIENTE DINERO"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-danger ">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                 });
             });
@@ -174,15 +253,27 @@
                         },
                         url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id": "o5", "userId": sessionStorage.id}),
+                        data: JSON.stringify({"id": "o5", "userId": myStorage.getItem("id"), "coste":20}),
                         dataType:'json',
                         success: function (response){
                             $("#frmPCR").hide();
                             $("#frmShop").show();
                             //alert("Objeto comprado");
+                            message = '"PCR comprada, QUE SEA NEGATIVO NEGATIVO NEGATIVO "';
+                            $('#alerts3').append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                         error: function(error){
                             //alert("Error", error);
+                            $("#frmPCR").hide();
+                            $("#frmShop").show();
+                            message = '"Error al comprar la PCR, NO TIENES SUFICIENTE DINERO"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-danger ">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                 });
             });
@@ -195,15 +286,27 @@
                         },
                         url: "/dsaApp/Objetos/addobjeto",
                         type: "POST",
-                        data: JSON.stringify({"id": "o1", "userId": sessionStorage.id}),
+                        data: JSON.stringify({"id": "o1", "userId": myStorage.getItem("id"), "coste":0}),
                         dataType:'json',
                         success: function (response){
                             $("#frmBolsaBasura").hide();
                             $("#frmShop").show();
                             //alert("Objeto comprado");
+                             message = '"Bolsa de Basura comprada,SIMON DONDE ESTA LOS EPISSSSS "';
+                            $('#alerts3').append(
+                            '<div class="alert alert-success">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                         error: function(error){
                             //alert("Error", error);
+                            $("#frmBolsaBasura").hide();
+                            $("#frmShop").show();
+                            message = '"Error al comprar la bolsa de basura, NO TIENES SUFICIENTE DINERO"';
+                            $('#alerts3').append(
+                            '<div class="alert alert-danger ">' +
+                            '<button type="button" class="close" data-dismiss="alert">' +
+                            '&times;</button>' +message+ '</div>');
                         },
                 });
             });
@@ -374,6 +477,40 @@
 
 <form id="frmWeb" style="color:black; text-align:center;">
     <h2>Principal</h2>
+
+
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="covid.jpeg" alt="Los Angeles" width="200" height="200">
+            </div>
+            <div class="carousel-item">
+                <img src="inglaterra.jpeg" alt="Chicago" width="200" height="200">
+            </div>
+            <div class="carousel-item">
+                <img src="eeuu.jpeg" alt="New York" width="200" height="200">
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+
+
 </form>
 
 <form id="frmRegister" style="color:black; text-align:center;">
@@ -400,6 +537,9 @@
 <form id="frmLogin" style="color:black; text-align:center;">
     <div class="modal-body row" >
         <div class="col-md-6 text-center" style = "font-family:Arial;padding-left:70px">
+
+            <div id="alerts"></div>
+
             <label style=" font-size:17px" for="username">Username:</label>
             <input type="text" id="username" name="username">
             <br>
@@ -420,6 +560,7 @@
 </form>
 
 <form id="frmTable">
+    <div id="alerts2"></div>
     <h2 style="color:black; text-align:center; font-size:20px;padding-bottom:25px;"><strong>USER INFORMATION</strong></h2>
     <table class="table table-bordered" id="tablauser" style=" max-width:50%; margin:0 auto;">
         <tr>
@@ -452,7 +593,7 @@
 
 <form id="frmShop">
     <h2 style="color:black; text-align:center; font-size:40px;padding-bottom:50px;"><strong>TIENDA</strong></h2>
-
+    <div class= col-md-4 id="alerts3"></div>
     <footer><img src="Carrito.png" alt="Workplace" usemap="#workmap" width="600" height="500"></footer>
 
     <map name="workmap">
