@@ -546,8 +546,8 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "/dsaApp/usuario/gettuser",
-                        type: "POST",
+                        url: "/dsaApp/usuario/gettuser/"+myStorage.getItem("id")+"",
+                        type: "GET",
                         data: JSON.stringify({"id": myStorage.getItem("id")}),
                         dataType:'json',
                         success: function (response) {
