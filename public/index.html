@@ -53,8 +53,8 @@
                             myStorage.setItem("password",response.password);
                             myStorage.setItem("id",response.id);
                             console.log("User Found in Storage: "+myStorage.getItem("user"));
-                        	$("#userId").html(response.idUser);
                             console.log("Accediendo a la tabla");
+                            $("#userId").html(response.id);
                             $("#ProfileBar").html(response.username);
                             $("#userNameColumn").html(response.username);
                             $("#userVida").html(response.vida+" %");
@@ -69,7 +69,7 @@
                             $("#ProfileBar").show();
                             $("#ShopBar").show();
                             message = '"Usuario ha accedido correctamente WELL DONE !!!! Vamos a por el COVID"';
-                            $('#alerts2').append(
+                            $('#alerts5').append(
                             '<div class="alert alert-success">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +message+ '</div>');
@@ -493,8 +493,8 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                         },
-                        url: "/dsaApp/usuario/gettuser",
-                        type: "POST",
+                        url: "/dsaApp/usuario/gettuser/"+myStorage.getItem("id")+"",
+                        type: "GET",
                         data: JSON.stringify({"id": myStorage.getItem("id")}),
                         dataType:'json',
                         success: function (response) {
@@ -514,7 +514,7 @@
                             '&times;</button>' +message+ '</div>');
 
                         },
-                });
+            });
         }
         function myInvetory(){
             $("#frmInventario").show();
@@ -1062,20 +1062,20 @@ body {
     <div class="main" style="background-color: white;">
         <div id="alerts4"></div>
         <h2 class="right" align="center" style="font-family: cursive; font-size: 500%; padding-top: 25px; colo: black;">Ranking</h2>
-        <div align="center"><img src="images/1r.png" style="margin-top: 25px;" height="200" width="200"></div>
+        <div align="center"><img src="images/1r.PNG" style="margin-top: 25px;" height="200" width="200"></div>
         <h3 class="text-center" style="color:black; margin-top: 5px;" align="center">Primero</h3>
         <h4 class="text-center" align="center" id="userNameRank1">Usuario</h4>
         <h5 class="text-center" align="center" id="userTimeRank1">Tiempo</h5>
 
         <table align="center">
             <tr>
-                <td style="padding-right: 200px; padding-top:40px;"><div><img src="images/2n.png" height="150" width="150"></div>
+                <td style="padding-right: 200px; padding-top:40px;"><div><img src="images/2n.PNG" height="150" width="150"></div>
                     <h3 class="text-center" style="color:Black; padding-top: 5px;" align="left">Segundo</h3>
                     <h4 class="text-center" id="userNameRank2">Usuario</h4>
                     <h5 class="text-center" id="userTimeRank2">Tiempo</h5>
                 </td>
 
-                <td style="padding-left: 200px; padding-top: 40px;"><div><img src="images/3r.png" height="150" width="150"></div>
+                <td style="padding-left: 200px; padding-top: 40px;"><div><img src="images/3r.PNG" height="150" width="150"></div>
                     <h3 class="text-center" style="color:Black; padding-top: 5px;">Tercero</h3>
                     <h4 class="text-center" id="userNameRank3">Usuario</h4>
                     <h5 class="text-center" id="userTimeRank3">Tiempo</h5>
@@ -1090,7 +1090,7 @@ body {
         <img src="images/Jordi.png" align="left"><h3 align="center">DISSENY DE SERVEIS I APLICACIONS</h3>
         <h5 align="center">Curso 2020/21</h5>
     </div>
-    <div class="leftcolumn" style="background-color:grey; margin-top;">
+    <div class="leftcolumn" style="background-color: rgba(0,0,0,0); margin-top;">
         <div class="card" style="background-color:white;">
             <h3>Jordi Rodríguez Santos</h3>
             <h4><b>Proyecto:</b> DSA</h4>
@@ -1104,7 +1104,7 @@ body {
         <img src="images/Miguel.png" align="left"><h3 align="center">DISSENY DE SERVEIS I APLICACIONS</h3>
         <h5 align="center">Curso 2020/21</h5>
     </div>
-    <div class="leftcolumn" style="background-color:grey;">
+    <div class="leftcolumn" style="background-color: rgba(0,0,0,0);">
         <div class="card" style="background-color:white;">
             <h3>Miguel Angel Rincón Ortiz</h3>
             <h4><b>Proyecto:</b> DSA</h4>
@@ -1118,7 +1118,7 @@ body {
         <img src="images/Jessica.png" align="left"><h3 align="center">DISSENY DE SERVEIS I APLICACIONS</h3>
         <h5 align="center">Curso 2020/21</h5>
     </div>
-    <div class="leftcolumn" style="background-color:grey;">
+    <div class="leftcolumn" style="background-color: rgba(0,0,0,0);">
         <div class="card" style="background-color:white;">
             <h3>Jessica Núñez Maturano</h3>
             <h4><b>Proyecto:</b> DSA</h4>
@@ -1132,7 +1132,7 @@ body {
         <img src="images/Carlos.png" align="left"><h3 align="center">DISSENY DE SERVEIS I APLICACIONS</h3>
         <h5 align="center">Curso 2020/21</h5>
     </div>
-    <div class="leftcolumn" style="background-color:grey;">
+    <div class="leftcolumn" style="background-color: rgba(0,0,0,0);">
         <div class="card" style="background-color:white;">
             <h3>Carlos Andres Garcia Madariaga</h3>
             <h4><b>Proyecto:</b> DSA</h4>
@@ -1146,7 +1146,7 @@ body {
         <img src="images/Marc.png" align="left"><h3 align="center">DISSENY DE SERVEIS I APLICACIONS</h3>
         <h5 align="center">Curso 2020/21</h5>
     </div>
-    <div class="leftcolumn" style="background-color:grey;">
+    <div class="leftcolumn" style="background-color: rgba(0,0,0,0);">
         <div class="card" style="background-color:white;">
             <h3>Marc Hidalgo Baena</h3>
             <h4><b>Proyecto:</b> DSA</h4>
@@ -1160,7 +1160,7 @@ body {
         <img src="images/Luis.png" align="left"><h3 align="center">DISSENY DE SERVEIS I APLICACIONS</h3>
         <h5 align="center">Curso 2020/21</h5>
     </div>
-    <div class="leftcolumn" style="background-color:grey;">
+    <div class="leftcolumn" style="background-color: rgba(0,0,0,0);">
         <div class="card" style="background-color:white;">
             <h3>Luis Martín Estraña</h3>
             <h4><b>Proyecto:</b> DSA</h4>
