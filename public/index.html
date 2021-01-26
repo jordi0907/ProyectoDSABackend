@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="images/virusCoronaLogo.jpg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script>
         $(document).ready(function(){
             $("#frmRegister").hide();
@@ -76,7 +77,7 @@
                         error: function(error){
                             //alert("Wrong username or password.", error);
                             message = '"Wrong username or password."';
-                            $('#alerts').append(
+                            $('#alerts2').append(
                             '<div class="alert alert-danger ">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +message+ '</div>');
@@ -107,7 +108,7 @@
                             error: function(error){
                                 //alert("Wrong username or password.", error);
                             message = '"Wrong username or password."';
-                            $('#alerts').append(
+                            $('#alerts1').append(
                             '<div class="alert alert-danger">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +message+ '</div>');
@@ -117,7 +118,7 @@
                 else{
                     //alert("password mismatch");
                     message = '"Wrong username or password."';
-                            $('#alerts').append(
+                            $('#alerts1').append(
                             '<div class="alert alert-danger ">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +message+ '</div>');
@@ -305,14 +306,14 @@
                         success: function (response){
                             $("#userNameRank1").html(response[0].username);
                             $("#userTimeRank1").html(response[0].tiempo);
-                            $("#userNameRank2").html(response[0].username);
-                            $("#userTimeRank2").html(response[0].tiempo);
-                            $("#userNameRank3").html(response[0].username);
-                            $("#userTimeRank3").html(response[0].tiempo);
+                            $("#userNameRank2").html(response[1].username);
+                            $("#userTimeRank2").html(response[1].tiempo);
+                            $("#userNameRank3").html(response[2].username);
+                            $("#userTimeRank3").html(response[2].tiempo);
                         },
                         error: function(error){
                         message = '"Error al cargar el rankinng"';
-                            $('#alerts3').append(
+                            $('#alerts4').append(
                             '<div class="alert alert-danger ">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +message+ '</div>');
@@ -323,6 +324,27 @@
                 $("#frmWeb").hide();
             });
 
+            $("#btnInfo").click(function(){
+                $("#frmInfo").show();
+                $("#frmWeb").hide();
+                $("#frmLogin").hide();
+                $("#frmRegister").hide();
+                $("#frmTable").hide();
+                $("#frmRanking").hide();
+                $("#frmShop").hide();
+                $("#frmMascarilla").hide();
+                $("#frmPocion").hide();
+                $("#frmRegeneracion").hide();
+                $("#frmPCR").hide();
+                $("#frmBolsaBasura").hide();
+                $("#frmInventario").hide();
+                $("#frmJordi").hide();
+                $("#frmMiguel").hide();
+                $("#frmJessica").hide();
+                $("#frmCarlos").hide();
+                $("#frmMarc").hide();
+                $("#frmLuis").hide();
+            });
             //BOTONES PARA IR ATRAS
 			$("#btnBackLogin").click(function(){
 			    $("#frmWeb").show();
@@ -486,7 +508,7 @@
                         },
                         error: function(error){
                         message = '"Error al cargar el perfil"';
-                            $('#alerts3').append(
+                            $('#alerts5').append(
                             '<div class="alert alert-danger ">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +message+ '</div>');
@@ -529,7 +551,7 @@
                         data: JSON.stringify({"id": myStorage.getItem("id")}),
                         dataType:'json',
                         success: function (response) {
-                            for (var i = 0; i < response.objectosList.length; i++){
+                            for (var i = 0; i < response.objetosList.length; i++){
                                 if (response.objetosList[i].id == "o1"){
                                     Bolsa = Bolsa + 1;
                                 }
@@ -554,34 +576,13 @@
                         },
                         error: function(error){
                         message = '"Error al cargar el inventario"';
-                            $('#alerts3').append(
+                            $('#alerts6').append(
                             '<div class="alert alert-danger ">' +
                             '<button type="button" class="close" data-dismiss="alert">' +
                             '&times;</button>' +message+ '</div>');
 
                         },
                 });
-        }
-        function myInfo(){
-            $("#frmInfo").show();
-            $("#frmWeb").hide();
-            $("#frmLogin").hide();
-            $("#frmRegister").hide();
-            $("#frmTable").hide();
-            $("#frmRanking").hide();
-            $("#frmShop").hide();
-            $("#frmMascarilla").hide();
-            $("#frmPocion").hide();
-            $("#frmRegeneracion").hide();
-            $("#frmPCR").hide();
-            $("#frmBolsaBasura").hide();
-            $("#frmInventario").hide();
-            $("#frmJordi").hide();
-            $("#frmMiguel").hide();
-            $("#frmJessica").hide();
-            $("#frmCarlos").hide();
-            $("#frmMarc").hide();
-            $("#frmLuis").hide();
         }
         //OBJETOS
         function myMascara(){
@@ -810,19 +811,16 @@ body {
 }
 </style>
 </head>
-<body style="background-color:grey;">
+<body style="background-image: url('images/Fondo.png'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 
-<div class="header" style="margin-top: -10px; margin-bottom: 0px; padding-top:100px; padding-bottom:30px; font-family:Creepster; background-image: url('images/virusCorona.png'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+<div class="header" style="margin-top: -10px; margin-bottom: 0px; padding-top:100px; padding-bottom:30px; font-family:Creepster; background-image: url('images/CovidRojo.png'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
     <h1 class="text-center" style="margin:0px; font-size: 400%;">Kill the Ratpenat</h1>
 </div>
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="background-color: black;">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#" onclick="myWeb()" id="WebBar">Web</a>
-        </div>
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#" onclick="myInfo()" id="InfoBar">Info</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" id="Page1">Page1 <span class="caret"></span></a>
@@ -850,7 +848,7 @@ body {
 
 <form id="frmWeb" style="color:black; text-align:center;">
     <div class="row" style="margin: auto">
-        <div class="leftcolumn" style="background-color:grey;" id="Carousel">
+        <div class="leftcolumn" style="background-color: rgba(0,0,0,0);" id="Carousel">
             <div class="card" style="background-color:white;" align="left">
                 <h2 class="right" style="font-family: cursive; font-size: 275%">Bienvenidos!!</h2>
                 <h5 style="font-family: cursive; font-size: 150%">Conoce nuestro divertido juego KILL DE RATPENAT</h5>
@@ -893,26 +891,30 @@ body {
                 <script>
                     $(document).ready(function(){
                         $("#myCarousel").carousel({
-                            interval : 4000
+                            interval : 2000
                         });
                     });
                 </script>
             </div>
             <div class="card" style="background-color:white;" align="left">
                 <h2 class="right" style="font-family: cursive; font-size: 275%">Empieza una nueva aventura</h2>
-                <h5 style="font-family: cursive; font-size: 150%">Progresa, recoge monedas, aumenta tu protección comprando con el objetos que te daran resistencia contra los enemigos y poder superar los desafios del juego</h5>
+                <h5 style="font-family: cursive; font-size: 150%">Progresa, recoge monedas, aumenta tu protección comprando objetos que te darán resistencia contra los enemigos y poder superar los desafios del juego</h5>
+            </div>
+            <div class="card" style="background-color:white;" align="left">
+                <h2 class="right" style="font-family: cursive; font-size: 275%">Tienda</h2>
+                <h5 style="font-family: cursive; font-size: 150%">Si te ataca el virus y te infecta, puedes visitar nuestra tienda para canjear tus monedas recogidas por items de salud y protección para hacerte fuerte y continuar tu camino</h5>
             </div>
             <div class="card" style="background-color:white;" align="left">
                 <h2 class="right" style="font-family: cursive; font-size: 275%">Ranking !!</h2>
-                <h5 style="font-family: cursive; font-size: 150%">Muestra tus habilidades llegando hasta el final superando los distintos mapas y se el más rápido en llegar al final.</h5>
+                <h5 style="font-family: cursive; font-size: 150%">Muestra tus habilidades huyendo del virus para llegar hasta el final superando los distintos mapas y sé el más rápido en acabar la misión, así conseguirás estar en lo mas alto de ranking</h5>
             </div>
         </div>
 
-        <div class="rightcolumn" style="background-color:grey;">
+        <div class="rightcolumn" style="background-color: rgba(0,0,0,0);">
             <div class="card" style="background-color:rgb(50, 50, 50);">
                 <h2 style="color: white">Información</h2>
-                <div class="fakeimg" style="height:100px;">Image</div>
-                <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+                <h3 style="color: grey">Quieres saber mas cosas del juego</h3>
+                <button type="button" class="gtn" id="btnInfo">Información</button>
             </div>
 
             <div class="card" style="background:rgb(50,50,50);">
@@ -936,6 +938,7 @@ body {
 <form id="frmRegister" style="color:black; text-align:center;">
     <div class="modal-body row" >
         <div class="col-md-6 text-center" style = "font-family:Arial;padding-left:70px">
+            <div id="alerts1"></div>
             <label style=" font-size:17px; width:150px;" for="NewUserName">Username:</label>
             <input style=" font-size:17px" type="text" id="NewUserName" name="NewUserName"><br>
             <label style=" font-size:17px; margin-top:10px; width:150px;" for="NewPassword">Password:</label>
@@ -957,6 +960,7 @@ body {
 <form id="frmLogin" style="color:black; text-align:center;">
     <div class="modal-body row">
         <div class="col-md-6 text-center" style = "font-family:Arial;padding-left:70px">
+            <div id="alerts2"></div>
             <label style=" font-size:17px" for="username">Username:</label>
             <input type="text" id="username" name="username">
             <br>
@@ -976,8 +980,9 @@ body {
     </div>
 </form>
 
-<form id="frmTable">
-    <h2 style="color:black; text-align:center; font-family: cursive; font-size:20px;padding-bottom:25px;"><strong>PERFIL</strong></h2>
+<form id="frmTable" style="background-color: white; margin-bottom: 20px;">
+    <div id="alerts5"></div>
+    <h2 style="color:black; text-align:center; font-family: cursive; font-size:20px;padding-bottom:25px; padding-top: 20px"><strong>PERFIL</strong></h2>
     <table class="table table-bordered" id="tablauser" style=" max-width:50%; margin:0 auto;">
         <tr>
             <th style="border: 1px solid black; width:170px;">Username</th>
@@ -1004,17 +1009,19 @@ body {
             <td style="border: 1px solid black;" id="userTiempo">title</td>
         </tr>
     </table>
+    <h5 style="font-family: cursive; font-size: 150%; padding-top:100px;"></h5>
 </form>
 
-<form id="frmInventario">
-    <h2 style="color:black; text-align:center; font-family: cursive; font-size:20px;padding-bottom:25px;"><strong>INVENTARIO</strong></h2>
+<form id="frmInventario" style="background-color: white">
+    <div id="alerts6"></div>
+    <h2 style="color:black; text-align:center; font-family: cursive; font-size:20px;padding-bottom:25px; padding-top: 20px"><strong>INVENTARIO</strong></h2>
     <table class="table table-bordered" id="inventario" style=" max-width:50%; margin:0 auto;">
         <tr>
             <th style="border: 1px solid black; width:170px;">Mascarillas</th>
             <td style="border: 1px solid black;" id="MascInv">0</td>
         </tr>
         <tr>
-            <th style="border: 1px solid black;">Pociones</th>
+            <th style="border: 1px solid black; ">Pociones</th>
             <td style="border: 1px solid black;" id="PociInv">0</td>
         </tr>
         <tr>
@@ -1030,32 +1037,30 @@ body {
             <td style="border: 1px solid black;" id="BolsaInv">0</td>
         </tr>
     </table>
+    <h5 style="font-family: cursive; font-size: 150%; padding-top:25px;"></h5>
 </form>
 
 <form id="frmInfo">
+    <div class="card" style="background-color:white;" align="left">
+        <h2 class="right" align="center" style="font-family: cursive; font-size: 275%">Objetivos del juego</h2>
+        <h5 align="center" style="font-family: cursive; font-size: 150%; padding-top:25px;">Una vez en las calles, tu misión consiste en sintetizar la vacuna, para lo cual necesitas recoger los componentes que te lleven a conseguirla.</h5>
+        <h5 align="center" style="font-family: cursive; font-size: 150%;">Por el camino, encontrarás personajes amigos que te mostrarán el itinerario correcto a seguir.</h5>
+        <h5 align="center" style="font-family: cursive; font-size: 150%;">Durante la misión debes conseguir la mayor cantidad de monedas posibles para adquirir items de salud, los cuales te permitirán defenderte de los virus enemigos que te atacarán y debilitarán en el trayecto.</h5>
+        <h5 align="center" style="font-family: cursive; font-size: 150%; padding-top:10px;">Corre, escapa y derrota al Boss</h5>
+    </div>
     <div class="card" style="background-color:white;">
         <h2></h2><img align="right" src="images/moneda.jpeg" width="130" height="130">
         <h2></h2>
-        <h2 class="right" style="font-family: cursive; font-size: 275%">Para que sirven las monedas:</h2>
-        <h5 style="font-family: cursive; font-size: 150%">Recoge monedas durante el recorrido y visita la tienda para canjearlas por objetos.</h5>
-        <h5 style="font-family: cursive; font-size: 150%">Utiliza los efectos de cada objeto para progresar en el, y pasar a otros mapas.</h5>
+        <h2 class="right" align="center" style="font-family: cursive; font-size: 275%">Para que sirven las monedas:</h2>
+        <h5 align="center" style="font-family: cursive; font-size: 150%; padding-top:25px;">Recoge monedas durante el recorrido y visita la tienda para canjearlas por objetos.</h5>
+        <h5 align="center" style="font-family: cursive; font-size: 150%">Utiliza los efectos de cada objeto para progresar en el, y pasar a otros mapas.</h5>
 
-    </div>
-    <div class="row" style="margin: auto">
-        <div class="leftcolumn">
-            <div class="card" style="background-color:white;" align="left">
-                <h2 class="right" style="font-family: cursive; font-size: 275%">Empieza una nueva aventura</h2>
-                <h5 style="font-family: cursive; font-size: 150%">Progresa, recoge monedas, aumenta tu protección comprando con el objetos que te daran resistencia contra los enemigos y poder superar los desafios del juego</h5>
-            </div>
-            <div class="card" style="background-color:white;" align="left">
-
-            </div>
-        </div>
     </div>
 </form>
 
 <form id="frmRanking">
     <div class="main" style="background-color: white;">
+        <div id="alerts4"></div>
         <h2 class="right" align="center" style="font-family: cursive; font-size: 500%; padding-top: 25px; colo: black;">Ranking</h2>
         <div align="center"><img src="images/1r.png" style="margin-top: 25px;" height="200" width="200"></div>
         <h3 class="text-center" style="color:black; margin-top: 5px;" align="center">Primero</h3>
@@ -1164,8 +1169,10 @@ body {
     </div>
 </form>
 
-<form id="frmShop" style="background-color: white;">
-    <h2 style="color:black; text-align:center; font-family: cursive; font-size:40px;padding-bottom:50px; padding-top: 20px;"><strong>TIENDA</strong></h2>
+<form id="frmShop" style="background-color: rgba(0,0,0,0);">
+    <h2 style="color:white; text-align:center; font-family: cursive; font-size:40px;padding-bottom:50px; padding-top: 20px;"><strong>TIENDA</strong></h2>
+
+    <div id="alerts3"></div>
 
     <footer><img src="images/Carrito.png" alt="Workplace" usemap="#workmap" width="600" height="500"></footer>
 
@@ -1232,16 +1239,16 @@ footer {
 
     <section>
         <article>
-            <h1>Mascarilla</h1>
-            <p>Puntos de Salud = 0</p>
-            <p>Puntos de Defensa = 20</p>
+            <h1 style="color:white;">Mascarilla</h1>
+            <p style="color:white;">Puntos de Salud = 0</p>
+            <p style="color:white;">Puntos de Defensa = 20</p>
         </article>
         <aside class="nav navbar-nav"><img src="images/Mascarilla.png" style="margin-top: 20px" width="300" height="250"></aside>
     </section>
 
     <footer>
         <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnMascarilla">Precio de 25$</button>
-        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnMascBack">Back</button></aside>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:white; color:black; font-size:17px; margin-top:20px" id="btnMascBack">Back</button></aside>
     </footer>
 
 </form>
@@ -1300,16 +1307,16 @@ footer {
 
     <section>
         <article>
-            <h1>Poción</h1>
-            <p>Puntos de Salud = 50</p>
-            <p>Puntos de Defensa = 60</p>
+            <h1 style="color:white;">Poción</h1>
+            <p style="color:white;">Puntos de Salud = 50</p>
+            <p style="color:white;">Puntos de Defensa = 60</p>
         </article>
         <aside class="nav navbar-nav"><img src="images/Pocion.png" style="margin-top: 20px" width="250" height="250"></aside>
     </section>
 
     <footer>
         <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnPocion">Precio de 50$</button>
-        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnPotiBack">Back</button></aside>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:white; color:black; font-size:17px; margin-top:20px" id="btnPotiBack">Back</button></aside>
     </footer>
 </form>
 
@@ -1367,16 +1374,16 @@ footer {
 
     <section>
         <article>
-            <h1>Regeneración</h1>
-            <p>Puntos de Salud = 100</p>
-            <p>Puntos de Defensa = 75</p>
+            <h1 style="color:white;">Regeneración</h1>
+            <p style="color:white;">Puntos de Salud = 100</p>
+            <p style="color:white;">Puntos de Defensa = 75</p>
         </article>
         <aside class="nav navbar-nav"><img src="images/Botiquin.png" width="250" height="250"></aside>
     </section>
 
     <footer>
         <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnRegeneracion">Precio de 100$</button>
-        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnRegeBack">Back</button></aside>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:white; color:black; font-size:17px; margin-top:20px" id="btnRegeBack">Back</button></aside>
     </footer>
 </form>
 
@@ -1434,16 +1441,16 @@ footer {
 
     <section>
         <article>
-            <h1>PCR</h1>
-            <p>Puntos de Salud = 0</p>
-            <p>Puntos de Defensa = 15</p>
+            <h1 style="color:white;">PCR</h1>
+            <p style="color:white;">Puntos de Salud = 0</p>
+            <p style="color:white">Puntos de Defensa = 15</p>
         </article>
         <aside class="nav navbar-nav"><img src="images/PCR.png" width="250" height="250"></aside>
     </section>
 
     <footer>
         <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnPCR">Precio de 20$</button>
-        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnPCRBack">Back</button></aside>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:white; color:black; font-size:17px; margin-top:20px" id="btnPCRBack">Back</button></aside>
     </footer>
 </form>
 
@@ -1501,16 +1508,16 @@ footer {
 
     <section>
         <article>
-            <h1>Bolsa de Basura</h1>
-            <p>Puntos de Salud = 0</p>
-            <p>Puntos de Defensa = 1</p>
+            <h1 style="color:white">Bolsa de Basura</h1>
+            <p style="color:white">Puntos de Salud = 0</p>
+            <p style="color:white">Puntos de Defensa = 1</p>
         </article>
         <aside class="nav navbar-nav"><img src="images/BolsaBasura.png" style="margin-top: 20px" width="200" height="150"></aside>
     </section>
 
     <footer>
         <button type="button" class="btn" style="background-color:rgb(200,80,80); font-size:17px; margin-top:20px" id="btnBolsaBasura">Precio de 0$</button>
-        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:rgb(0,0,0); font-size:17px; margin-top:20px" id="btnBasuraBack">Back</button></aside>
+        <aside class="nav navbar-nav"><button type="button" class="btn" style="background-color:white; font-size:17px; margin-top:20px; color:black" id="btnBasuraBack">Back</button></aside>
     </footer>
 </form>
 </body>
